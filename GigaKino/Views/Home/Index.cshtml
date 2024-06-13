@@ -1,0 +1,20 @@
+﻿@{
+    ViewData["Title"] = "Filmy";
+}
+
+@model IEnumerable<GigaKino.ObjectsDTO.FilmDTO>
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+
+    <div id="filmContainer">
+        @foreach (var film in Model)
+        {
+            <div>
+                <h2>@film.Tytul</h2>
+                <p>@film.Opis</p>
+                <!-- Render other film properties as needed -->
+            </div>
+        }
+    </div>
+</div>
