@@ -42,7 +42,7 @@ namespace GigaKino.Migrations
 
                     b.Property<int>("Ogr_wiekowe")
                         .HasColumnType("int")
-                        .HasColumnName("OgrWiekowe");
+                        .HasColumnName("Ogr_Wiekowe");
 
                     b.Property<string>("Opis")
                         .IsRequired()

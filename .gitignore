@@ -1,3 +1,5 @@
-Database/obj
-Database/bin
+obj
+bin
 .vs
+.vscode
+DS_Store

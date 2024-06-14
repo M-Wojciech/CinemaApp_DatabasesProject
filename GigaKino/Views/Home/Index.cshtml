@@ -2,25 +2,30 @@
 @{
     ViewData["Title"] = "Filmy";
 }
+<head>
+    <style>
+    </style>
+</head>
+<body>
+    <div class="text-center">
+        <h1 class="display-4">Witamy</h1>
 
-<div class="text-center">
-    <h1 class="display-4">Witamy</h1>
-
-    <div id="filmContainer">
-        @if (Model != null && Model.Any())
-        {
-            foreach (var film in Model)
+        <div id="filmContainer" class="collapse d-sm-inline-flex justify-content-between">
+            @if (Model != null && Model.Any())
             {
-                <div>
-                    <h2>@film.Tytul</h2>
-                    <p>@film.Opis</p>
-                    <!-- Render other film properties as needed -->
-                </div>
+                foreach (var film in Model)
+                {
+                    <div style="width: 200px;">
+                        <h2>@film.Tytul</h2>
+                        <p>@film.Opis</p>
+                        <!-- Render other film properties as needed -->
+                    </div>
+                }
             }
-        }
-        else
-        {
-            <p>Brak dostępnych filmów.</p>
-        }
+            else
+            {
+                <p>Brak dostępnych filmów.</p>
+            }
+        </div>
     </div>
-</div>
+</body>
