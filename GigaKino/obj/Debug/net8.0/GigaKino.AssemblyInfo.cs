@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("GigaKino")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ae3aebf14bb09652ac280cd0c2d5e06e268ed1c7")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+82ac71ce5d793fc01b4dae5f22baa3b554a1fd1f")]
 [assembly: System.Reflection.AssemblyProductAttribute("GigaKino")]
 [assembly: System.Reflection.AssemblyTitleAttribute("GigaKino")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

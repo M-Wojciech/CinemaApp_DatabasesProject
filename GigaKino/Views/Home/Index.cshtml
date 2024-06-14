@@ -1,20 +1,26 @@
-﻿@{
+﻿@model IEnumerable<GigaKino.ObjectsDTO.FilmDTO>
+@{
     ViewData["Title"] = "Filmy";
 }
 
-@model IEnumerable<GigaKino.ObjectsDTO.FilmDTO>
-
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
+    <h1 class="display-4">Witamy</h1>
 
     <div id="filmContainer">
-        @foreach (var film in Model)
+        @if (Model != null && Model.Any())
         {
-            <div>
-                <h2>@film.Tytul</h2>
-                <p>@film.Opis</p>
-                <!-- Render other film properties as needed -->
-            </div>
+            foreach (var film in Model)
+            {
+                <div>
+                    <h2>@film.Tytul</h2>
+                    <p>@film.Opis</p>
+                    <!-- Render other film properties as needed -->
+                </div>
+            }
+        }
+        else
+        {
+            <p>Brak dostępnych filmów.</p>
         }
     </div>
 </div>

@@ -31,8 +31,8 @@ namespace GigaKino.Models
         public string Rezyser { get; set; }
 
         [Required]
-        [Column("OgrWiekowe")]
-        public int OgrWiekowe { get; set; }
+        [Column("Ogr_Wiekowe")]
+        public int Ogr_wiekowe { get; set; }
 
         [Required]
         [StringLength(200)]

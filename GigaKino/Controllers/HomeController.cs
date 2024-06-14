@@ -1,21 +1,25 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using GigaKino.Models;
+using GigaKino.ServicesInterfaces;
 
 namespace GigaKino.Controllers;
 
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
+    private readonly IFilmService _filmService;
 
-    public HomeController(ILogger<HomeController> logger)
+    public HomeController(ILogger<HomeController> logger, IFilmService filmService)
     {
         _logger = logger;
+        _filmService = filmService;
     }
 
-    public IActionResult Index()
+    public async Task<IActionResult> Index()
     {
-        return View();
+        var films = await _filmService.GetAllFilmsAsync();
+        return View(films);
     }
 
     public IActionResult Repertuar()
