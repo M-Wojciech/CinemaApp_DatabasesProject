@@ -1,6 +1,3 @@
-using GigaKino.Models;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using GigaKino.ObjectsDTO;
 
 namespace GigaKino.ServicesInterfaces

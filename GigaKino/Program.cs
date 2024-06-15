@@ -6,21 +6,57 @@ using GigaKino.Services;
 using GigaKino.Models;
 using GigaKino.ServicesInterfaces;
 using GigaKino;
+using System.Runtime.InteropServices;
+using System.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
+
+System.Environment.SetEnvironmentVariable("WEBSITE_LOAD_USER_PROFILE", "1", EnvironmentVariableTarget.Process);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
+builder.Services.AddScoped<IKinoService, KinoService>();
+builder.Services.AddScoped<ISalaService, SalaService>();
+builder.Services.AddScoped<IMiejsceService, MiejsceService>();
 builder.Services.AddScoped<IFilmService, FilmService>();
+builder.Services.AddScoped<ISeansService, SeansService>();
+builder.Services.AddScoped<IBiletService, BiletService>();
+builder.Services.AddScoped<ITransakcjaService, TransakcjaService>();
+builder.Services.AddScoped<IKlientService, KlientService>();
+builder.Services.AddScoped<IKontoService, KontoService>();
+builder.Services.AddScoped<IPracownikService, PracownikService>();
 
-string? connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+string? connectionString;
+if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+    {
+        connectionString = builder.Configuration.GetConnectionString("DefaultConnectionWindows");
+    }
+    else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX) || RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+    {
+        connectionString = builder.Configuration.GetConnectionString("DefaultConnectionUnix");
+    }
+    else
+    {
+        throw new PlatformNotSupportedException("Unsupported OS platform");
+}
+Console.WriteLine(connectionString);
+
+var a = File.Exists("/home/site/wwwroot/Certs/server-ca.pem");
+Console.WriteLine("server-ca.pem = "+a);
+a = File.Exists("/home/site/wwwroot/Certs/client-key.pem");
+Console.WriteLine("client-key.pem = "+a);
+a = File.Exists("/home/site/wwwroot/Certs/client-cert.pem");
+Console.WriteLine("client-cert.pem = "+a);
+
 builder.Services.AddDbContext<KinoContext>(options => options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
 var app = builder.Build();
+Console.WriteLine("app built");
 
 using (var scope = app.Services.CreateScope())
 {
+    Console.WriteLine("geting dbContext");
     var dbContext = scope.ServiceProvider.GetRequiredService<KinoContext>();
 
     try
@@ -55,4 +91,5 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
+Console.WriteLine("running the app...");
 app.Run();

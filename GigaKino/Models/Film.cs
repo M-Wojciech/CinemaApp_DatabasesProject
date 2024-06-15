@@ -14,7 +14,7 @@ namespace GigaKino.Models
         [Required]
         [StringLength(100)]
         [Column("Tytul")]
-        public string Tytul { get; set; }
+        public required string Tytul { get; set; }
 
         [Required]
         [Column("Dlugosc")]
@@ -23,12 +23,12 @@ namespace GigaKino.Models
         [Required]
         [StringLength(50)]
         [Column("Gatunek")]
-        public string Gatunek { get; set; }
+        public required string Gatunek { get; set; }
 
         [Required]
         [StringLength(50)]
         [Column("Rezyser")]
-        public string Rezyser { get; set; }
+        public required string Rezyser { get; set; }
 
         [Required]
         [Column("Ogr_Wiekowe")]
@@ -37,11 +37,11 @@ namespace GigaKino.Models
         [Required]
         [StringLength(200)]
         [Column("Trailer")]
-        public string Trailer { get; set; }
+        public required string Trailer { get; set; }
 
         [Required]
         [StringLength(1000)]
         [Column("Opis")]
-        public string Opis { get; set; }
+        public required string Opis { get; set; }
     }
 }
