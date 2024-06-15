@@ -18,7 +18,7 @@ public class HomeController : Controller
 
     public async Task<IActionResult> Index()
     {
-        var films = await _filmService.GetAllFilmsAsync();
+        var films = await _filmService.GetAllFilmyAsync();
         return View(films);
     }
 
