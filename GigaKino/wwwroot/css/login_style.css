@@ -1,0 +1,122 @@
+body {
+    background-color: #0D0D0D;
+    color: #0D0D0D;
+    font-family: 'Poppins', sans-serif;
+    overflow: hidden;
+}
+
+.icon-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.container-login100 {
+    width: 100%;
+    min-height: 100vh;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    background: #0D0D0D;
+}
+
+.wrap-login100 {
+    width: 390px;
+    background: #fff;
+    border-radius: 24px;
+    overflow: hidden;
+    padding: 77px 55px 33px;
+    box-shadow: 0 5px 10px 0 rgba(0, 0, 0, .1);
+    -moz-box-shadow: 0 5px 10px 0 rgba(0, 0, 0, .1);
+    -webkit-box-shadow: 0 5px 10px 0 rgba(0, 0, 0, .1);
+    -o-box-shadow: 0 5px 10px 0 rgba(0, 0, 0, .1);
+    -ms-box-shadow: 0 5px 10px 0 rgba(0, 0, 0, .1);
+}
+
+/* Bordered form */
+form {
+    /*border: 3px solid #f1f1f1;*/
+    width: 100%;
+}
+
+.login100-form-title {
+    display: block;
+    font-size: 30px;
+    color: #0D0D0D;
+    line-height: 1.2;
+    text-align: center;
+}
+.p-b-26 {
+    padding-bottom: 26px;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+.input-group label {
+    margin-bottom: 5px;
+    font-weight: 500;
+    font-size: 12px; /* Уменьшаем размер текста */
+}
+
+.input-group input {
+    padding: 10px;
+    border: 1px solid #0D0D0D;
+    border-radius: 12px;
+    font-size: 14px;
+}
+
+/* Full-width inputs */
+/*input[type=text], input[type=password] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 0px 0;
+    display: inline-block;
+    border: 1px solid #0D0D0D;
+    box-sizing: border-box;
+    border-radius: 12px;
+}*/
+
+/* Set a style for all buttons */
+button {
+    background-color: #BF5669;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    border-radius: 40px;
+}
+
+/* Add a hover effect for buttons */
+button:hover {
+    background-color: #A63740;
+}
+
+/* Center the avatar image inside this container */
+.imgcontainer {
+    text-align: center;
+    margin: 24px 0 12px 0;
+}
+
+/* Avatar image */
+img.avatar {
+    width: 40%;
+    border-radius: 50%;
+}
+
+/* Add padding to containers */
+.container {
+    padding: 16px;
+}

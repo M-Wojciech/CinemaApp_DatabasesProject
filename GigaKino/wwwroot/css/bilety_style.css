@@ -1,0 +1,185 @@
+/* Основные стили */
+body {
+    margin: 0;
+    font-family: 'Istok Web', sans-serif;
+    background-color: #0D0D0D;
+    color: #BFBDBF;
+}
+
+h1 {
+    color: #A63740;
+    font-family: 'Alfa Slab One', sans-serif;
+    font-size: 40px;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.text-container {
+    flex-grow: 1; /* Дает тексту занимать оставшееся пространство */
+    margin-right: 20px; /* Отступ справа для расстояния между текстом и кнопкой */
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #A63740;
+    display: flex;
+    justify-content: center; /* Центрируем элементы списка */
+}
+
+li {
+    margin: 0; /* Убираем внешние отступы у элементов списка */
+}
+
+li a {
+    display: block;
+    color: #0D0D0D;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+li a:hover {
+    /*font-weight: bold;*/
+}
+
+.active {
+    font-weight: bold; /* Жирный текст при наведении */
+}
+
+.outer-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
+    padding: 20px;
+    gap: 30px;
+}
+
+.movie-details {
+    display: flex;
+    background-color: #0D0D0D;
+    overflow: hidden;
+    margin-left: 35px;
+}
+
+.poster {
+    width: auto;
+    height: 290px;
+    object-fit: cover;
+}
+
+.details {
+    padding: 10px;
+    margin-left: 20px;
+}
+
+h2 {
+    margin: 10px 0;
+    font-size: 24px;
+    font-weight: normal;
+}
+
+.opis {
+    margin: 5px 0;
+}
+
+.seans {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.tickets::before{
+    width: 100px;
+    height: 5px;
+    background-color: #A63740;
+    content: '';
+    display: block;
+}
+
+/* Секция билетов */
+.tickets {
+    margin-top: 10px;
+}
+
+.ticket-selector {
+    background-color: #0D0D0D;
+    width: auto;
+    margin-left: 260px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+    font-size: 16px;
+    color: #BFBDBF;
+}
+
+.quantity-btn {
+    background-color: #0D0D0D;
+    color: #BFBDBF;
+    border: none;
+    padding: 5px;
+    width: 25px;
+    height: 25px;
+    text-align: center;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.quantity-input {
+    width: 30px;
+    text-align: center;
+    background-color: #ffffff;
+    color: #000;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-right: 160px;
+}
+
+.back-btn, .next-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 12px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.back-btn {
+    background-color: transparent;
+    color: #A63740;
+    border: 1px solid #A63740;
+}
+
+.next-btn {
+    background-color: #A63740;
+    color: #0D0D0D;
+}
+
+.back-btn:hover {
+    font-weight: bold;
+}
+
+.next-btn:hover {
+    background-color: #BF5669;
+}

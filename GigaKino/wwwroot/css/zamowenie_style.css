@@ -1,0 +1,95 @@
+body {
+    margin: 0;
+    font-family: 'Istok Web', sans-serif;
+    background-color: #0D0D0D;
+    color: #BFBDBF;
+}
+
+h1 {
+    color: #A63740;
+    font-family: 'Alfa Slab One', sans-serif;
+    font-size: 40px;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.text-container {
+    flex-grow: 1; /* Дает тексту занимать оставшееся пространство */
+    margin-right: 20px; /* Отступ справа для расстояния между текстом и кнопкой */
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #A63740;
+    display: flex;
+    justify-content: center; /* Центрируем элементы списка */
+}
+
+li {
+    margin: 0; /* Убираем внешние отступы у элементов списка */
+}
+
+li a {
+    display: block;
+    color: #0D0D0D;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+li a:hover {
+    /*font-weight: bold;*/
+}
+
+.active {
+    font-weight: bold; /* Жирный текст при наведении */
+}
+
+main {
+    padding: 20px;
+}
+
+.text2-container {
+    margin-left: 35px;
+}
+
+h2 {
+    margin: 10px 0;
+    font-size: 24px;
+    font-weight: normal;
+}
+
+button {
+    margin-top: 20px;
+    display: inline-block; /* или inline-flex */
+    padding: 10px 20px;
+    line-height: 1.5;
+    background-color: #A63740;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    text-align: center;
+}
+
+button:hover {
+    background-color: #BF5669;
+}
+
+button a {
+    color: #0D0D0D;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+
+

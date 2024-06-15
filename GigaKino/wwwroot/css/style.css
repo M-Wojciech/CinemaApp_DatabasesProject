@@ -1,0 +1,260 @@
+
+
+body {
+    background-color: #0D0D0D;
+    color: #BFBDBF;
+    font-family: 'Istok Web', sans-serif;
+    margin: 0;
+}
+
+*{
+    cursor: default;
+}
+
+h1 {
+    color: #A63740;
+    font-family: 'Alfa Slab One', sans-serif;
+    font-size: 40px;
+}
+
+.dropbtn {
+    background-color: #0D0D0D; /* Чёрный цвет фона кнопки */
+    color: #BFBDBF; /* Белый цвет текста */
+    font-size: 15px; /* Размер шрифта кнопки */
+    padding: 7px 15px; /* Внутренние отступы кнопки */
+    border: 2px solid #BFBDBF; /* Белая граница */
+    border-radius: 10px; /* Скругленные углы */
+    cursor: pointer; /* Курсор при наведении */
+    transition: background-color 0.3s, border-color 0.3s; /* Плавный переход цвета */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dropbtn:hover, .dropbtn:focus {
+    font-weight: bold; /* Жирный текст при наведении */
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #ffffff;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    border-radius: 10px;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+}
+
+.dropdown-content img {
+    width: 24px; /* Ширина изображения */
+    height: 24px; /* Высота изображения */
+    margin-right: 5px;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {
+    font-weight: bold;
+}
+
+/* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
+.show {display:block;}
+
+.dropbtn img {
+    width: 24px; /* Ширина изображения */
+    height: 24px; /* Высота изображения */
+    margin-right: 5px; /* Отступ между изображением и текстом */
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.text-container {
+    flex-grow: 1; /* Дает тексту занимать оставшееся пространство */
+    margin-right: 20px; /* Отступ справа для расстояния между текстом и кнопкой */
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #A63740;
+    display: flex;
+    justify-content: center; /* Центрируем элементы списка */
+}
+
+li {
+    margin: 0; /* Убираем внешние отступы у элементов списка */
+}
+
+li a {
+    display: block;
+    color: #0D0D0D;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+li a:hover {
+    /*font-weight: bold;*/
+}
+
+.active {
+    font-weight: bold; /* Жирный текст при наведении */
+}
+
+.outer-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
+    padding: 0px 20px;
+    gap: 30px;
+}
+
+.scrol {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: auto;
+    max-width: 1200px;
+    margin: auto;
+}
+
+.repertoire::before{
+    width: 100px;
+    height: 5px;
+    background-color: #A63740;
+    content: '';
+    display: block;
+}
+
+.image-container {
+    max-width: 90%;
+    max-height: 100%;
+    height: auto;
+    object-fit: contain;
+}
+
+.image {
+    width: 100%;
+    height: 400px;
+    object-fit: contain;
+}
+
+/* Общие стили для навигационных стрелок */
+.nav {
+    width: 50px;
+    height: 50px;
+    background-color: #0D0D0D;
+    color: #BFBDBF;
+    font-size: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+}
+
+/* Позиционирование левой стрелки */
+.nav.left {
+    margin-right: 10px; /* Отступ справа для левой стрелки */
+}
+
+/* Позиционирование правой стрелки */
+.nav.right {
+    margin-left: 10px; /* Отступ слева для правой стрелки */
+}
+
+.bottom-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Выровнять по левому краю */
+    width: 100%;
+    max-width: 1200px;
+}
+
+.caption {
+    margin-top: 5px;
+    color: #BFBDBF;
+    font-size: 24px;
+}
+
+.indicators {
+    display: flex;
+    justify-content: center;
+    margin-top: 5px;
+}
+
+.indicator {
+    width: 12px;
+    height: 12px;
+    margin: 0 5px;
+    background-color: #BFBDBF;
+    border-radius: 50%;
+}
+
+.indicator.active {
+    background-color: #A63740;
+}
+
+.repertoire {
+    margin: auto;
+    width: 100%;
+}
+
+.repertoire h2 {
+    margin: 10px 0;
+    font-size: 24px;
+    font-weight: normal;
+}
+
+.movies {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.movie {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 30%;
+}
+
+.movie img {
+    width: 100%;
+    max-width: 250px;
+    height: auto;
+    max-height: 360px;
+}
+
+.movie-title {
+    margin-top: 10px;
+    text-align: center;
+    color: #BFBDBF;
+}
+
+.movie a {
+    text-decoration: none;
+}

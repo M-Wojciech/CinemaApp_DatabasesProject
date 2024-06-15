@@ -1,0 +1,207 @@
+/* Основные стили */
+body {
+    margin: 0;
+    font-family: 'Istok Web', sans-serif;
+    background-color: #0D0D0D;
+    color: #BFBDBF;
+}
+
+h1 {
+    color: #A63740;
+    font-family: 'Alfa Slab One', sans-serif;
+    font-size: 40px;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.text-container {
+    flex-grow: 1; /* Дает тексту занимать оставшееся пространство */
+    margin-right: 20px; /* Отступ справа для расстояния между текстом и кнопкой */
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #A63740;
+    display: flex;
+    justify-content: center; /* Центрируем элементы списка */
+}
+
+li {
+    margin: 0; /* Убираем внешние отступы у элементов списка */
+}
+
+li a {
+    display: block;
+    color: #0D0D0D;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+li a:hover {
+    /*font-weight: bold;*/
+}
+
+.active {
+    font-weight: bold; /* Жирный текст при наведении */
+}
+
+/* Основная часть */
+main {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
+    padding: 20px;
+    gap: 30px;
+}
+
+.order-summary {
+    margin-left: 35px;
+}
+
+section h2 {
+    margin: 10px 0;
+    font-size: 24px;
+    font-weight: normal;
+}
+
+.order-summary table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.order-summary th, .order-summary td {
+    text-align: left;
+    padding: 10px 0px 0px;
+    font-size: 16px;
+    color: #BFBDBF;
+}
+
+.total {
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.outer-container {
+    display: flex;
+    gap: 100px;
+}
+
+.payment::before{
+    width: 100px;
+    height: 5px;
+    background-color: #A63740;
+    content: '';
+    display: block;
+}
+
+.payment-options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.payment-options label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background-color: white;
+    border-radius: 12px;
+    padding: 8px;
+    color: #0D0D0D;
+}
+
+.payment-options input {
+    margin-right: 10px;
+}
+
+.payment-options img {
+    width: 40px;
+}
+
+.personal-info form {
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+.input-group-horizontal {
+    display: flex;
+    gap: 10px; /* Пробел между полями */
+    margin-bottom: 15px;
+}
+
+.input-group-horizontal input {
+    flex: 1; /* Чтобы поля равномерно занимали пространство */
+}
+
+.input-field {
+    display: flex;
+    flex-direction: column;
+    flex: 1; /* Чтобы поля равномерно занимали пространство */
+}
+
+.input-group label,
+.input-field label {
+    margin-bottom: 5px;
+    font-weight: 500;
+    font-size: 14px; /* Уменьшаем размер текста */
+}
+
+.input-group input,
+.input-group-horizontal input {
+    padding: 10px;
+    border: 1px solid #0D0D0D;
+    border-radius: 12px;
+    font-size: 14px;
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+.back-btn, .next-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 12px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.back-btn {
+    background-color: transparent;
+    color: #A63740;
+    border: 2px solid #A63740;
+}
+
+.next-btn {
+    background-color: #A63740;
+    color: #0D0D0D;
+}
+
+.back-btn:hover {
+    font-weight: bold;
+}
+
+.next-btn:hover {
+    background-color: #BF5669;
+}

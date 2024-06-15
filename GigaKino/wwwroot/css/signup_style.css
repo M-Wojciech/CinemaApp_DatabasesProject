@@ -1,0 +1,112 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #0D0D0D;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.container {
+    display: flex;
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px #0D0D0D;
+    overflow: hidden;
+}
+
+.form-container {
+    padding: 20px;
+    width: 400px;
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+.header .icon {
+    width: 40px;
+    height: 40px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+}
+
+h2 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+.input-group-horizontal {
+    display: flex;
+    gap: 10px; /* Пробел между полями */
+    margin-bottom: 15px;
+}
+
+.input-group-horizontal input {
+    flex: 1; /* Чтобы поля равномерно занимали пространство */
+}
+
+.input-field {
+    display: flex;
+    flex-direction: column;
+    flex: 1; /* Чтобы поля равномерно занимали пространство */
+}
+
+.input-group label,
+.input-field label {
+    margin-bottom: 5px;
+    font-weight: 500;
+    font-size: 12px; /* Уменьшаем размер текста */
+}
+
+.input-group input,
+.input-group-horizontal input {
+    padding: 10px;
+    border: 1px solid #0D0D0D;
+    border-radius: 12px;
+    font-size: 14px;
+}
+
+.password-requirements {
+    font-size: 12px;
+    color: #0D0D0D;
+    margin-bottom: 20px;
+}
+
+.submit-btn {
+    background-color: #BF5669;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 32px;
+    font-size: 16px;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+}
+
+.submit-btn:hover {
+    background-color: #A63740;
+}
+
+.image-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.image-container img {
+    width: 300px;
+    height: auto;
+}
