@@ -3,7 +3,7 @@
     ViewData["Title"] = Model.Tytul;
 }
 
-<head>
+@section Head{
     <style>
         body {
             margin: 0;
@@ -370,88 +370,85 @@
     <script src="~/js/function.js" defer></script>
     <script src="~/js/repertuar_fun.js"></script>
     <link rel="stylesheet" href="~/css/film_style.css">
-</head>
-<body>
-    <main>
-        <section class="movie">
-            <h2>@Model.Tytul</h2>
-            <div class="movie-details">
-                <div class="main-image">
-                    <img src="@Model.BannerPath" alt="video">
-                    <button class="play-button" onclick="window.location.href='@Model.Trailer';">&#9658;</button>
+}
+
+<section class="movie">
+    <h2>@Model.Tytul</h2>
+    <div class="movie-details">
+        <div class="main-image">
+            <img src="@Model.BannerPath" alt="video">
+            <button class="play-button" onclick="window.location.href='@Model.Trailer';">&#9658;</button>
+        </div>
+        <div class="info">
+            <h3>Informacja</h3>
+            <div class="info2">
+                <div class="opis">
+                    <p>@Model.Opis</p>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td><strong>GATUNEK:</strong></td>
+                                <td>@Model.Gatunek</td>
+                            </tr>
+                            <tr>
+                                <td><strong>REŻYSER:</strong></td>
+                                <td>@Model.Rezyser</td>
+                            </tr>
+                            <tr>
+                                <td><strong>OGRANICZENIA WIEKOWE:</strong></td>
+                                <td>Przeznaczony dla osób od @Model.Ogr_wiekowe roku życia.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>CZAS TRWANIA:</strong></td>
+                                <td>@Model.Dlugosc min</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
-                <div class="info">
-                    <h3>Informacja</h3>
-                    <div class="info2">
-                        <div class="opis">
-                            <p>@Model.Opis</p>
-                            <table>
-                                <tbody>
-                                    <tr>
-                                        <td><strong>GATUNEK:</strong></td>
-                                        <td>@Model.Gatunek</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>REŻYSER:</strong></td>
-                                        <td>@Model.Rezyser</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>OGRANICZENIA WIEKOWE:</strong></td>
-                                        <td>Przeznaczony dla osób od @Model.Ogr_wiekowe roku życia.</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>CZAS TRWANIA:</strong></td>
-                                        <td>@Model.Dlugosc min</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="poster">
-                            <!--@if (Model.IdFilm == 1)
-                            {
-                                <img src="~/img/diuna.jpg" alt="poster">
-                            } else if (Model.IdFilm == 2)
-                            {
-                                <img src="~/img/panda.jpg" alt="poster">
-                            } else if (Model.IdFilm == 3)
-                            {
-                                <img src="~/img/godzila.jpg" alt="poster">
-                            }-->
-                            <img src="@Model.PosterPath" alt="poster">
-                        </div>
-                    </div>
+                <div class="poster">
+                    <!--@if (Model.IdFilm == 1)
+                    {
+                        <img src="~/img/diuna.jpg" alt="poster">
+                    } else if (Model.IdFilm == 2)
+                    {
+                        <img src="~/img/panda.jpg" alt="poster">
+                    } else if (Model.IdFilm == 3)
+                    {
+                        <img src="~/img/godzila.jpg" alt="poster">
+                    }-->
+                    <img src="@Model.PosterPath" alt="poster">
                 </div>
             </div>
-        </section>
-        <section class="ticket-section">
-            <h2>Kup bilet</h2>
-            <section class="location">
-                <img src="~/img/map.png" alt="Icon">
-                <select name="lokalizacja" id="lokalizacja-select">
-                    <option value="wroclawia">Wrocław - Wroclavia</option>
-                    <option value="pasaz">Wrocław - Pasaż</option>
-                    <option value="katowice">Katowice</option>
-                </select>
-            </section>
-            <div class="date-selection">
-                <div id="weekdays">
-                    <a class="day">Dziś</a>
-                    <a class="day">Nd</a>
-                    <a class="day">Pn</a>
-                    <a class="day">Wt</a>
-                    <a class="day">Śr</a>
-                    <a class="day">Cz</a>
-                    <a class="day">Pt</a>
-                </div>
-                <label for="date-input" class="date-label">
-                    <input type="date" id="date-input">
-                </label>
-            </div>
-            <label id="dzisiaj"></label>
-            <div class="showtimes">
-                <button>19:30<br>2D, Napisy</button>
-                <button>20:30<br>IMAX, PL</button>
-            </div>
-        </section>
-    </main>
-</body>
+        </div>
+    </div>
+</section>
+<section class="ticket-section">
+    <h2>Kup bilet</h2>
+    <section class="location">
+        <img src="~/img/map.png" alt="Icon">
+        <select name="lokalizacja" id="lokalizacja-select">
+            <option value="wroclawia">Wrocław - Wroclavia</option>
+            <option value="pasaz">Wrocław - Pasaż</option>
+            <option value="katowice">Katowice</option>
+        </select>
+    </section>
+    <div class="date-selection">
+        <div id="weekdays">
+            <a class="day">Dziś</a>
+            <a class="day">Nd</a>
+            <a class="day">Pn</a>
+            <a class="day">Wt</a>
+            <a class="day">Śr</a>
+            <a class="day">Cz</a>
+            <a class="day">Pt</a>
+        </div>
+        <label for="date-input" class="date-label">
+            <input type="date" id="date-input">
+        </label>
+    </div>
+    <label id="dzisiaj"></label>
+    <div class="showtimes">
+        <button>19:30<br>2D, Napisy</button>
+        <button>20:30<br>IMAX, PL</button>
+    </div>
+</section>

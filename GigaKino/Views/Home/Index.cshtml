@@ -2,49 +2,47 @@
 @{
     ViewData["Title"] = "Filmy";
 }
-<head>
+@section Head{
     <style>
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Istok+Web&display=swap" rel="stylesheet">
     <script src="~/js/function.js" defer></script>
     <link rel="stylesheet" href="~/css/style.css">
-</head>
-<body>
-    <div class="outer-container">
-        <div class="scrol">
-            <div class="nav left">&#10094;</div>
-                <div class="image-container">
-                    <img src="~/img/diuna-baner.jpeg" alt="Diuna" class="image">
-                    <div class="caption">DIUNA</div>
-                    <div class="indicators">
-                        <div class="indicator active"></div>
-                        <div class="indicator"></div>
-                        <div class="indicator"></div>
-                    </div>
+}
+<div class="outer-container">
+    <div class="scrol">
+        <div class="nav left">&#10094;</div>
+            <div class="image-container">
+                <img src="~/img/diuna-baner.jpeg" alt="Diuna" class="image">
+                <div class="caption">DIUNA</div>
+                <div class="indicators">
+                    <div class="indicator active"></div>
+                    <div class="indicator"></div>
+                    <div class="indicator"></div>
                 </div>
-            <div class="nav right">&#10095;</div>
-        </div>
-        <div class="repertoire">
-            <h2>W Repertuarze</h2>
-            <div class="movies">
-                @if (Model != null && Model.Any())
-                {
-                    foreach (var film in Model)
-                    {
-                        <div class="movie">
-                            <a href="@Url.Action("Index", "Film", new { id = film.IdFilm })">
-                                <img src="@film.PosterPath" alt="poster">
-                                <div class="movie-title">@film.Tytul</div>
-                            </a>
-                        </div>
-                    }
-                }
-                else
-                {
-                    <p>Brak dostępnych filmów.</p>
-                }
             </div>
+        <div class="nav right">&#10095;</div>
+    </div>
+    <div class="repertoire">
+        <h2>W Repertuarze</h2>
+        <div class="movies">
+            @if (Model != null && Model.Any())
+            {
+                foreach (var film in Model)
+                {
+                    <div class="movie">
+                        <a href="@Url.Action("Index", "Film", new { id = film.IdFilm })">
+                            <img src="@film.PosterPath" alt="poster">
+                            <div class="movie-title">@film.Tytul</div>
+                        </a>
+                    </div>
+                }
+            }
+            else
+            {
+                <p>Brak dostępnych filmów.</p>
+            }
         </div>
     </div>
-</body>
+</div>
