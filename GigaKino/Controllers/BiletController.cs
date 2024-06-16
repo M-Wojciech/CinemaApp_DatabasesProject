@@ -1,8 +1,7 @@
  using GigaKino.ObjectsDTO;
 using GigaKino.ServicesInterfaces;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+
 
 namespace GigaKino.Controllers
 {
@@ -20,7 +19,17 @@ namespace GigaKino.Controllers
         [HttpPost]
         public async Task<ActionResult<BiletDTO>> CreateBilet(BiletDTO biletDTO)
         {
+            if (biletDTO == null)
+            {
+                return BadRequest("Cannot create from null object");
+            }
+
             var createdBilet = await _biletService.CreateBiletAsync(biletDTO);
+            if (createdBilet == null)
+            {
+                return BadRequest("Failed to create Bilet.");
+            }
+
             return CreatedAtAction(nameof(GetBiletById), new { id = createdBilet.IdBilet }, createdBilet);
         }
 
@@ -38,17 +47,21 @@ namespace GigaKino.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<BiletDTO>>> GetAllBilets()
+        public async Task<ActionResult<IEnumerable<BiletDTO>>> GetAllBilety()
         {
-            var bilets = await _biletService.GetAllBiletyAsync();
-            return Ok(bilets);
+            var bilety = await _biletService.GetAllBiletyAsync();
+            if (bilety == null)
+            {
+                return StatusCode(500, "Internal server error");
+            }
+            return Ok(bilety);
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteBilet(uint id)
         {
             var isDeleted = await _biletService.DeleteBiletAsync(id);
-            if (!isDeleted)
+            if (isDeleted != true)
             {
                 return NotFound();
             }

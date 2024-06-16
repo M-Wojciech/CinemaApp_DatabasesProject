@@ -2,6 +2,7 @@ using GigaKino.ObjectsDTO;
 using GigaKino.ServicesInterfaces;
 using Microsoft.AspNetCore.Mvc;
 
+
 namespace GigaKino.Controllers
 {
     [Route("api/[controller]")]
@@ -18,7 +19,17 @@ namespace GigaKino.Controllers
         [HttpPost]
         public async Task<ActionResult<FilmDTO>> CreateFilm(FilmDTO filmDTO)
         {
+            if (filmDTO == null)
+            {
+                return BadRequest("Cannot create from null object");
+            }
+
             var createdFilm = await _filmService.CreateFilmAsync(filmDTO);
+            if (createdFilm == null)
+            {
+                return BadRequest("Failed to create Film.");
+            }
+
             return CreatedAtAction(nameof(GetFilmById), new { id = createdFilm.IdFilm }, createdFilm);
         }
 
@@ -35,18 +46,35 @@ namespace GigaKino.Controllers
             return film;
         }
 
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<FilmDTO>>> GetAllFilms()
+        [HttpGet("title/{title}")]
+        public async Task<ActionResult<FilmDTO>> GetFilmByTitleAsync(string title)
         {
-            var films = await _filmService.GetAllFilmsAsync();
-            return Ok(films);
+            var film = await _filmService.GetFilmByTitleAsync(title);
+
+            if (film == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(film);
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<FilmDTO>>> GetAllFilmy()
+        {
+            var filmy = await _filmService.GetAllFilmyAsync();
+            if (filmy == null)
+            {
+                return StatusCode(500, "Internal server error");
+            }
+            return Ok(filmy);
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteFilm(uint id)
         {
             var isDeleted = await _filmService.DeleteFilmAsync(id);
-            if (!isDeleted)
+            if (isDeleted != true)
             {
                 return NotFound();
             }

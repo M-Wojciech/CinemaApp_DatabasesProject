@@ -1,13 +1,13 @@
-using GigaKino.Models;
+using GigaKino.ObjectsDTO;
 
 namespace GigaKino.ServicesInterfaces
 {
     public interface IPracownikService
     {
-        Task<Pracownik> CreatePracownikAsync(Pracownik pracownik);
-        Task<Pracownik> GetPracownikByIdAsync(uint id);
-        Task<IEnumerable<Pracownik>> GetAllPracownicyAsync();
-        Task<bool> UpdatePracownikAsync(Pracownik pracownik);
-        Task<bool> DeletePracownikAsync(uint id);
+        Task<PracownikDTO?> CreatePracownikAsync(PracownikDTO pracownikDTO);
+        Task<PracownikDTO?> GetPracownikByIdAsync(uint id);
+        Task<IEnumerable<PracownikDTO>?> GetAllPracownicyAsync();
+        Task<PracownikDTO?> UpdatePracownikAsync(uint id, PracownikDTO pracownikDTO);
+        Task<bool?> DeletePracownikAsync(uint id);
     }
 }
