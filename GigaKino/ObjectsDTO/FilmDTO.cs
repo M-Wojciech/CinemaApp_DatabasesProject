@@ -10,5 +10,7 @@ namespace GigaKino.ObjectsDTO
         public int Ogr_wiekowe { get; set; }
         public required string Trailer { get; set; }
         public required string Opis { get; set; }
+        public required string BannerPath { get; set; }
+        public required string PosterPath { get; set; }
     }
 }

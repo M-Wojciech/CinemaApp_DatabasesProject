@@ -43,5 +43,15 @@ namespace GigaKino.Models
         [StringLength(1000)]
         [Column("Opis")]
         public required string Opis { get; set; }
+
+        [Required]
+        [StringLength(45)]
+        [Column("BannerPath")]
+        public required string BannerPath { get; set; }
+
+        [Required]
+        [StringLength(45)]
+        [Column("PosterPath")]
+        public required string PosterPath { get; set; }
     }
 }

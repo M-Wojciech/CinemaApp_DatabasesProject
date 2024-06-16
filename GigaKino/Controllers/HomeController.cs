@@ -18,8 +18,12 @@ public class HomeController : Controller
 
     public async Task<IActionResult> Index()
     {
-        var films = await _filmService.GetAllFilmyAsync();
-        return View(films);
+        var filmy = await _filmService.GetAllFilmyAsync();
+        if (filmy == null)
+        {
+            return StatusCode(500, "Internal server error");
+        }
+        return View(filmy);
     }
 
     public IActionResult Repertuar()
