@@ -376,8 +376,7 @@
     <h2>@Model.Tytul</h2>
     <div class="movie-details">
         <div class="main-image">
-            <img src="@Model.BannerPath" alt="video">
-            <button class="play-button" onclick="window.location.href='@Model.Trailer';">&#9658;</button>
+            <iframe width="784" height="441" src=@Model.Trailer title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
         </div>
         <div class="info">
             <h3>Informacja</h3>
