@@ -206,7 +206,7 @@ input[type="date"] {
 /* Позиционирование значка календаря */
 .date-label::after {
     content: '';
-    background-image: url('img/calendar.png'); /* Замените на путь к вашему изображению */
+    background-image: url('~/img/calendar.png'); /* Замените на путь к вашему изображению */
     background-size: cover; /* Растягивает изображение, чтобы оно заполнило псевдоэлемент */
     background-position: center;
     width: 20px; /* Размер изображения */

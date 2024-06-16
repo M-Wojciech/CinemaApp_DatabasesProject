@@ -17,14 +17,14 @@ h1 {
 }
 
 .dropbtn {
-    background-color: #0D0D0D; /* Чёрный цвет фона кнопки */
-    color: #BFBDBF; /* Белый цвет текста */
-    font-size: 15px; /* Размер шрифта кнопки */
-    padding: 7px 15px; /* Внутренние отступы кнопки */
-    border: 2px solid #BFBDBF; /* Белая граница */
-    border-radius: 10px; /* Скругленные углы */
-    cursor: pointer; /* Курсор при наведении */
-    transition: background-color 0.3s, border-color 0.3s; /* Плавный переход цвета */
+    background-color: #0D0D0D; 
+    color: #BFBDBF; 
+    font-size: 15px; 
+    padding: 7px 15px;
+    border: 2px solid #BFBDBF; 
+    border-radius: 10px; 
+    cursor: pointer;
+    transition: background-color 0.3s, border-color 0.3s;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -246,9 +246,9 @@ main {
 }
 
 .location img, img {
-    width: 24px; /* Ширина изображения */
-    height: 24px; /* Высота изображения */
-    margin-right: 5px; /* Отступ между изображением и текстом */
+    width: 24px; 
+    height: 24px; 
+    margin-right: 5px;
 }
 
 select {
@@ -291,13 +291,17 @@ select:focus {
 .day {
     color: #BFBDBF;
     padding: 5px 10px;
+    cursor: default;
 }
 
 .day.active {
     color: #A63740;
 }
 
-/* Скрываем стандартный <input type="date"> */
+.day.selected {
+    color: #A63740;
+}
+
 input[type="date"] {
     position: absolute;
     width: 100%;
@@ -306,31 +310,30 @@ input[type="date"] {
     cursor: pointer;
 }
 
-/* Стили для метки, которая будет отображать значок календаря */
+
 .date-label {
     display: inline-block;
-    width: 40px; /* Ширина и высота кнопки */
+    width: 40px;
     height: 40px;
-    background-color: #0D0D0D; /* Цвет фона */
-    border-radius: 5px; /* Скругленные углы */
+    background-color: #0D0D0D;
+    border-radius: 5px;
     position: relative;
     overflow: hidden;
     cursor: pointer;
 }
 
-/* Позиционирование значка календаря */
 .date-label::after {
     content: '';
-    background-image: url('img/calendar.png'); /* Замените на путь к вашему изображению */
-    background-size: cover; /* Растягивает изображение, чтобы оно заполнило псевдоэлемент */
+    background-image: url('~/img/calendar.png'); 
+    background-size: cover; 
     background-position: center;
-    width: 20px; /* Размер изображения */
-    height: 20px; /* Размер изображения */
+    width: 20px; 
+    height: 20px; 
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    pointer-events: none; /* Изображение не должно блокировать клик */
+    pointer-events: none; 
 }
 
 #dzisiaj {

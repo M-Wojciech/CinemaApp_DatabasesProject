@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="~/css/style.css">
 </head>
 <body>
-    @* <header>
+    <!--<header>
         <div class="container">
             <div class="text-container">
                 <h1>GigaKino</h1>
@@ -37,8 +37,7 @@
             <li><a class="active">Filmy</a></li>
             <li><a href="/Home/Repertuar">Repertuar</a></li>
         </ul>
-<<<<<<< HEAD
-    </header>
+    </header>-->
     <main class="outer-container">
         <div class="scrol">
             <div class="nav left">&#10094;</div>
@@ -50,64 +49,30 @@
                     <div class="indicator"></div>
                     <div class="indicator"></div>
                 </div>
-=======
-    </header> *@
-    @* <main class="outer-container"> *@
-    <div class="scrol">
-        <div class="nav left">&#10094;</div>
-        <div class="image-container">
-            <img src="img/diuna-baner.jpeg" alt="Diuna" class="image">
-            <div class="caption">DIUNA</div>
-            <div class="indicators">
-                <div class="indicator active"></div>
-                <div class="indicator"></div>
-                <div class="indicator"></div>
->>>>>>> 3a04c633616b5fe7b9801557b28b797983c054b4
             </div>
+            <div class="nav right">&#10095;</div>
         </div>
-        <div class="nav right">&#10095;</div>
-    </div>
 
-    <div class="repertoire">
-        <h2>W Repertuarze</h2>
-        <div class="movies">
-            @if (Model != null && Model.Any())
-            {
-                foreach (var film in Model)
+        <div class="repertoire">
+            <h2>W Repertuarze</h2>
+            <div class="movies">
+                @if (Model != null && Model.Any())
                 {
-<<<<<<< HEAD
                     foreach (var film in Model)
                     {
                         <div class="movie">
-                            @if (film.IdFilm == 1)
-                            {
-                                <img src="~/img/diuna.jpg" alt="Diuna">
-                            }
-                            else if (film.IdFilm == 2)
-                            {
-                                <img src="~/img/panda.jpg" alt="Kung Fu Panda 4">
-                            }
-                            else if (film.IdFilm == 3)
-                            {
-                                <img src="~/img/godzila.jpg" alt="Godzila">
-                            }
-                            <!--<img src="img/panda.jpg" alt="Kung Fu Panda 4">-->
-                            <div class="movie-title">@film.Tytul</div>
+                            <a href="@Url.Action("Index", "Film", new { id = film.IdFilm })">
+                                <img src="@film.PosterPath" alt="poster">
+                                <div class="movie-title">@film.Tytul</div>
+                            </a>
                         </div>
                     }
-=======
-                    <div class="movie">
-                        <img src=@film.PosterPath alt="Godzila">
-                        <div class="movie-title">@film.Tytul</div>
-                    </div>
->>>>>>> 3a04c633616b5fe7b9801557b28b797983c054b4
                 }
-            }
-            else
-            {
-                <p>Brak dostępnych filmów.</p>
-            }
+                else
+                {
+                    <p>Brak dostępnych filmów.</p>
+                }
+            </div>
         </div>
-    </div>
-    @* </main> *@
+    </main>
 </body>

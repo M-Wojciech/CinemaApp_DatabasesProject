@@ -7,7 +7,7 @@ namespace GigaKino.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class FilmController : ControllerBase
+    public class FilmController : Controller
     {
         private readonly IFilmService _filmService;
 
@@ -80,6 +80,18 @@ namespace GigaKino.Controllers
             }
 
             return NoContent();
+        }
+
+        [HttpGet("details/{id}")] 
+        public async Task<IActionResult> Index(uint id)
+        {
+            var film = await _filmService.GetFilmByIdAsync(id);
+            if (film == null)
+            {
+                return NotFound();
+            }
+
+            return View(film);
         }
     }
 }

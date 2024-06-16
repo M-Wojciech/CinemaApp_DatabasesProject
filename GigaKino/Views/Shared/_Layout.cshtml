@@ -16,16 +16,16 @@
             </div>
             <div class="dropdown">
                 <button onclick="myFunction()" class="dropbtn">
-                    <img src="img/Icons.png" alt="Icon">
+                    <img src="~/img/Icons.png" alt="Icon">
                     KONTO
                 </button>
                 <div id="myDropdown" class="dropdown-content">
                     <a href="login.html">
-                        <img src="img/Icons2.png" alt="Icon">
+                        <img src="~/img/Icons2.png" alt="Icon">
                         Logowanie
                     </a>
                     <a href="signup.html">
-                        <img src="img/edit.png" alt="Icon">
+                        <img src="~/img/edit.png" alt="Icon">
                         Rejestracja
                     </a>
                 </div>
@@ -42,11 +42,11 @@
             </li>
         </ul>
     </header>
-    <div id="shared-outer-container" class="container">
-        <main class="outer-container">
+    <!--<div id="shared-outer-container" class="container">
+        <main class="outer-container">-->
             @RenderBody()
-        </main>
-    </div>
+        <!--</main>
+    </div>-->
 
     @* <footer class="border-top footer text-muted">
         <div class="container">

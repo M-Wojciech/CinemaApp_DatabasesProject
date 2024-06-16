@@ -1,0 +1,457 @@
+﻿@model GigaKino.ObjectsDTO.FilmDTO
+@{
+    ViewData["Title"] = Model.Tytul;
+}
+
+<head>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Istok Web', sans-serif;
+            background-color: #0D0D0D;
+            color: #BFBDBF;
+        }
+
+        * {
+            /*cursor: default;*/
+            box-sizing: border-box;
+        }
+
+        h1 {
+            color: #A63740;
+            font-family: 'Alfa Slab One', sans-serif;
+            font-size: 40px;
+        }
+
+        .dropbtn {
+            background-color: #0D0D0D;
+            color: #BFBDBF;
+            font-size: 15px;
+            padding: 7px 15px;
+            border: 2px solid #BFBDBF;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s, border-color 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+            .dropbtn:hover, .dropbtn:focus {
+                font-weight: bold; /* Жирный текст при наведении */
+            }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #ffffff;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            border-radius: 10px;
+        }
+
+            /* Links inside the dropdown */
+            .dropdown-content a {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                color: black;
+                padding: 12px 16px;
+                text-decoration: none;
+            }
+
+                /* Change color of dropdown links on hover */
+                .dropdown-content a:hover {
+                    font-weight: bold;
+                }
+
+        /* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
+        .show {
+            display: block;
+        }
+
+        .dropbtn img {
+            width: 24px; /* Ширина изображения */
+            height: 24px; /* Высота изображения */
+            margin-right: 5px; /* Отступ между изображением и текстом */
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+
+        .text-container {
+            flex-grow: 1; /* Дает тексту занимать оставшееся пространство */
+            margin-right: 20px; /* Отступ справа для расстояния между текстом и кнопкой */
+        }
+
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #A63740;
+            display: flex;
+            justify-content: center; /* Центрируем элементы списка */
+        }
+
+        li {
+            margin: 0; /* Убираем внешние отступы у элементов списка */
+        }
+
+            li a {
+                display: block;
+                color: #0D0D0D;
+                text-align: center;
+                padding: 14px 16px;
+                text-decoration: none;
+                cursor: pointer;
+            }
+
+                li a:hover {
+                    /*font-weight: bold;*/
+                }
+
+        .active {
+            font-weight: bold; /* Жирный текст при наведении */
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        .movie {
+            display: flex;
+            flex-direction: column;
+            /*align-items: center;*/
+        }
+
+            .movie h2 {
+                margin: 10px 0;
+                font-size: 24px;
+                font-weight: normal;
+            }
+
+        .movie-details {
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Центрирует внутренние div */
+            flex-grow: 1; /* Заполняет оставшееся пространство */
+        }
+
+        .main-image {
+            position: relative;
+            flex: 2;
+            max-width: 90%;
+            max-height: 100%;
+            height: auto;
+            object-fit: contain;
+        }
+
+            .main-image img {
+                width: 100%;
+                height: 400px;
+                object-fit: contain;
+            }
+
+        .play-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.5);
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            padding: 20px;
+            cursor: pointer;
+            font-size: 2em;
+        }
+
+        .info {
+            flex: 3;
+            background: #0D0D0D;
+            padding: 20px;
+        }
+
+            .info h3 {
+                margin-bottom: 15px;
+                font-size: 22px;
+                font-weight: normal;
+            }
+
+        .info2 {
+            display: flex;
+        }
+
+        .info table {
+            width: 70%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        .info td {
+            text-align: left;
+            padding: 10px 0px 0px;
+            font-size: 16px;
+            color: #BFBDBF;
+        }
+
+        .info p {
+            margin-bottom: 10px;
+        }
+
+        .poster {
+            flex: 1;
+        }
+
+            .poster img {
+                width: 200px;
+                height: auto;
+            }
+
+        .ticket-section::before {
+            width: 100px;
+            height: 5px;
+            background-color: #A63740;
+            content: '';
+            display: block;
+        }
+
+        .ticket-section {
+            margin-top: 40px;
+            background: #0D0D0D;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+            .ticket-section h2 {
+                margin: 10px 0;
+                font-size: 24px;
+                font-weight: normal;
+            }
+
+        .location {
+            display: flex;
+            /*justify-content: space-between;*/
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+            .location img, img {
+                width: 24px;
+                height: 24px;
+                margin-right: 5px;
+            }
+
+        select {
+            font-size: 0.9rem;
+            padding: 2px 5px;
+            background-color: #0D0D0D;
+            color: #BFBDBF;
+            border: none;
+        }
+
+            select::after {
+                content: '▼';
+                font-size: 10px;
+                color: white;
+                position: absolute;
+                right: 10px;
+                top: 50%;
+                transform: translateY(-50%);
+                pointer-events: none;
+                border: none;
+            }
+
+            select option {
+                background-color: white;
+                color: #0D0D0D;
+                border: #0D0D0D;
+            }
+
+            select:focus {
+                outline: none;
+            }
+
+        .date-selection {
+            display: flex;
+            gap: 5px;
+            margin-left: 26px;
+            margin-top: 20px;
+        }
+
+        .day {
+            color: #BFBDBF;
+            padding: 5px 10px;
+            cursor: default;
+        }
+
+            .day.active {
+                color: #A63740;
+            }
+
+            .day.selected {
+                color: #A63740;
+            }
+
+        input[type="date"] {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+
+        .date-label {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background-color: #0D0D0D;
+            border-radius: 5px;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+            .date-label::after {
+                content: '';
+                background-image: url('../../wwwroot/img/calendar.png');
+                background-size: cover;
+                background-position: center;
+                width: 20px;
+                height: 20px;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                pointer-events: none;
+            }
+
+        #dzisiaj {
+            margin-left: 35px;
+        }
+
+        .showtimes {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            margin-left: 35px;
+        }
+
+            .showtimes button {
+                background-color: #A63740;
+                color: #0D0D0D;
+                border: none;
+                padding: 10px;
+                border-radius: 10px;
+                font-size: 14px;
+                text-align: center;
+                width: 100px;
+            }
+
+                .showtimes button:hover {
+                    background-color: #BF5669;
+                }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Istok+Web&display=swap" rel="stylesheet">
+    <script src="~/js/function.js" defer></script>
+    <script src="~/js/repertuar_fun.js"></script>
+    <link rel="stylesheet" href="~/css/film_style.css">
+</head>
+<body>
+    <main>
+        <section class="movie">
+            <h2>@Model.Tytul</h2>
+            <div class="movie-details">
+                <div class="main-image">
+                    <img src="@Model.BannerPath" alt="video">
+                    <button class="play-button" onclick="window.location.href='@Model.Trailer';">&#9658;</button>
+                </div>
+                <div class="info">
+                    <h3>Informacja</h3>
+                    <div class="info2">
+                        <div class="opis">
+                            <p>@Model.Opis</p>
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>GATUNEK:</strong></td>
+                                        <td>@Model.Gatunek</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>REŻYSER:</strong></td>
+                                        <td>@Model.Rezyser</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>OGRANICZENIA WIEKOWE:</strong></td>
+                                        <td>Przeznaczony dla osób od @Model.Ogr_wiekowe roku życia.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>CZAS TRWANIA:</strong></td>
+                                        <td>@Model.Dlugosc min</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="poster">
+                            <!--@if (Model.IdFilm == 1)
+                            {
+                                <img src="~/img/diuna.jpg" alt="poster">
+                            } else if (Model.IdFilm == 2)
+                            {
+                                <img src="~/img/panda.jpg" alt="poster">
+                            } else if (Model.IdFilm == 3)
+                            {
+                                <img src="~/img/godzila.jpg" alt="poster">
+                            }-->
+                            <img src="@Model.PosterPath" alt="poster">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="ticket-section">
+            <h2>Kup bilet</h2>
+            <section class="location">
+                <img src="~/img/map.png" alt="Icon">
+                <select name="lokalizacja" id="lokalizacja-select">
+                    <option value="wroclawia">Wrocław - Wroclavia</option>
+                    <option value="pasaz">Wrocław - Pasaż</option>
+                    <option value="katowice">Katowice</option>
+                </select>
+            </section>
+            <div class="date-selection">
+                <div id="weekdays">
+                    <a class="day">Dziś</a>
+                    <a class="day">Nd</a>
+                    <a class="day">Pn</a>
+                    <a class="day">Wt</a>
+                    <a class="day">Śr</a>
+                    <a class="day">Cz</a>
+                    <a class="day">Pt</a>
+                </div>
+                <label for="date-input" class="date-label">
+                    <input type="date" id="date-input">
+                </label>
+            </div>
+            <label id="dzisiaj"></label>
+            <div class="showtimes">
+                <button>19:30<br>2D, Napisy</button>
+                <button>20:30<br>IMAX, PL</button>
+            </div>
+        </section>
+    </main>
+</body>
