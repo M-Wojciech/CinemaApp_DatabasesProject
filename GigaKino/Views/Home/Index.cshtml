@@ -2,45 +2,17 @@
 @{
     ViewData["Title"] = "Filmy";
 }
-<head>
+@section Head{
     <style>
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Istok+Web&display=swap" rel="stylesheet">
     <script src="~/js/function.js" defer></script>
     <link rel="stylesheet" href="~/css/style.css">
-</head>
-<body>
-    <!--<header>
-        <div class="container">
-            <div class="text-container">
-                <h1>GigaKino</h1>
-            </div>
-            <div class="dropdown">
-                <button onclick="myFunction()" class="dropbtn">
-                    <img src="~/img/Icons.png" alt="Icon">
-                    KONTO
-                </button>
-                <div id="myDropdown" class="dropdown-content">
-                    <a href="login.html">
-                        <img src="~/img/Icons2.png" alt="Icon">
-                        Logowanie
-                    </a>
-                    <a href="signup.html">
-                        <img src="~/img/edit.png" alt="Icon">
-                        Rejestracja
-                    </a>
-                </div>
-            </div>
-        </div>
-        <ul>
-            <li><a class="active">Filmy</a></li>
-            <li><a href="/Home/Repertuar">Repertuar</a></li>
-        </ul>
-    </header>-->
-    <main class="outer-container">
-        <div class="scrol">
-            <div class="nav left">&#10094;</div>
+}
+<div class="outer-container">
+    <div class="scrol">
+        <div class="nav left">&#10094;</div>
             <div class="image-container">
                 <img src="~/img/diuna-baner.jpeg" alt="Diuna" class="image">
                 <div class="caption">DIUNA</div>
@@ -50,29 +22,27 @@
                     <div class="indicator"></div>
                 </div>
             </div>
-            <div class="nav right">&#10095;</div>
-        </div>
-
-        <div class="repertoire">
-            <h2>W Repertuarze</h2>
-            <div class="movies">
-                @if (Model != null && Model.Any())
+        <div class="nav right">&#10095;</div>
+    </div>
+    <div class="repertoire">
+        <h2>W Repertuarze</h2>
+        <div class="movies">
+            @if (Model != null && Model.Any())
+            {
+                foreach (var film in Model)
                 {
-                    foreach (var film in Model)
-                    {
-                        <div class="movie">
-                            <a href="@Url.Action("Index", "Film", new { id = film.IdFilm })">
-                                <img src="@film.PosterPath" alt="poster">
-                                <div class="movie-title">@film.Tytul</div>
-                            </a>
-                        </div>
-                    }
+                    <div class="movie">
+                        <a href="@Url.Action("Index", "Film", new { id = film.IdFilm })">
+                            <img src="@film.PosterPath" alt="poster">
+                            <div class="movie-title">@film.Tytul</div>
+                        </a>
+                    </div>
                 }
-                else
-                {
-                    <p>Brak dostępnych filmów.</p>
-                }
-            </div>
+            }
+            else
+            {
+                <p>Brak dostępnych filmów.</p>
+            }
         </div>
-    </main>
-</body>
+    </div>
+</div>

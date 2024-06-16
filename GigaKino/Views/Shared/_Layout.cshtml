@@ -7,6 +7,7 @@
     @* <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />y *@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/GigaKino.styles.css" asp-append-version="true" />
+    @RenderSection("Head", required: false)
 </head>
 <body>
     <header>
@@ -32,8 +33,6 @@
             </div>
         </div>
         <ul>
-            @* <li><a class="active">Filmy</a></li>
-            <li><a href="repertuar.html">Repertuar</a></li> *@
             <li class="nav-item">
                 <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Filmy</a>
             </li>
@@ -42,17 +41,11 @@
             </li>
         </ul>
     </header>
-    <!--<div id="shared-outer-container" class="container">
-        <main class="outer-container">-->
+    <div id="shared-outer-container" class="outer-container">
+        <main>
             @RenderBody()
-        <!--</main>
-    </div>-->
-
-    @* <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2024 - GigaKino</a>
-        </div>
-    </footer> *@
+        </main>
+    </div>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
