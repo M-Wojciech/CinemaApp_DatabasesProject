@@ -7,7 +7,7 @@ namespace GigaKino.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class KlientController : ControllerBase
+    public class KlientController : Controller
     {
         private readonly IKlientService _klientService;
 
@@ -46,7 +46,7 @@ namespace GigaKino.Controllers
             return klient;
         }
 
-        [HttpGet]
+        [HttpGet("klients")]
         public async Task<ActionResult<IEnumerable<KlientDTO>>> GetAllKlients()
         {
             var klients = await _klientService.GetAllKlienciAsync();
@@ -67,6 +67,29 @@ namespace GigaKino.Controllers
             }
 
             return NoContent();
+        }
+
+        [HttpGet("signup")]
+        public IActionResult Signup()
+        {
+            return View();
+        }
+
+        [HttpPost("register")]
+        public async Task<ActionResult<KlientDTO>> RegisterKlient(KlientDTO klientDTO)
+        {
+            if (klientDTO == null || klientDTO.Konto == null || string.IsNullOrWhiteSpace(klientDTO.Konto.Haslo))
+            {
+                return BadRequest("Invalid registration details");
+            }
+
+            var registeredKlient = await _klientService.RegisterKlientAsync(klientDTO);
+            if (registeredKlient == null)
+            {
+                return BadRequest("Registration failed");
+            }
+
+            return RedirectToAction("Index", "Home");
         }
     }
 }

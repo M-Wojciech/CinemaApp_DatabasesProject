@@ -1,4 +1,5 @@
 using GigaKino.ObjectsDTO;
+using GigaKino.Services;
 using GigaKino.ServicesInterfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,7 +8,7 @@ namespace GigaKino.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class KontoController : ControllerBase
+    public class KontoController : Controller
     {
         private readonly IKontoService _kontoService;
 
@@ -46,7 +47,7 @@ namespace GigaKino.Controllers
             return konto;
         }
 
-        [HttpGet]
+        [HttpGet("konto")]
         public async Task<ActionResult<IEnumerable<KontoDTO>>> GetAllKontos()
         {
             var kontos = await _kontoService.GetAllKontaAsync();
@@ -67,6 +68,23 @@ namespace GigaKino.Controllers
             }
 
             return NoContent();
+        }
+
+        [HttpGet("login")]
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpGet("mojekonto")]
+        public async Task<IActionResult> MojeKonto()
+        {
+            var konty = await _kontoService.GetAllKontaAsync();
+            if (konty == null)
+            {
+                return StatusCode(500, "Internal server error");
+            }
+            return View(konty);
         }
     }
 }

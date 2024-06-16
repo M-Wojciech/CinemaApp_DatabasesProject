@@ -1,0 +1,84 @@
+﻿@model GigaKino.ObjectsDTO.KlientDTO
+@{
+    ViewData["Title"] = "Signup";
+    Layout = null;
+}
+<head>
+    
+    <meta charset="UTF-8">
+    <title>GigaKino_Signup</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/signup_style.css">
+    <script>
+        const klientDTO = {
+            Mail: 'example@example.com',
+            Imie: 'Imie',
+            Nazwisko: 'Nazwisko',
+            Konto: {
+                Haslo: 'password'
+            }
+        };
+
+        fetch('https://your-api-endpoint/api/Klient', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(klientDTO)
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Success:', data);
+            // Handle success response
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            // Handle error
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="form-container">
+            <div class="header">
+                <img src="~/img/edit.png" alt="Icon" class="icon">
+                <h2>Zarejestruj się</h2>
+            </div>
+            <form asp-action="RegisterKlient" asp-controller="Klient" method="post">
+                <div class="input-group-horizontal">
+                    <div class="input-field">
+                        <label asp-for="Imie"></label>
+                        <input asp-for="Imie" required>
+                    </div>
+                    <div class="input-field">
+                        <label asp-for="Nazwisko"></label>
+                        <input asp-for="Nazwisko" required>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label asp-for="Mail"></label>
+                    <input asp-for="Mail" type="email" required>
+                </div>
+                <div class="input-group">
+                    <label asp-for="Konto.Typ"></label>
+                    <input asp-for="Konto.Typ" required>
+                </div>
+                <div class="input-group-horizontal">
+                    <div class="input-field">
+                        <label asp-for="Konto.Haslo"></label>
+                        <input asp-for="Konto.Haslo" type="password" required>
+                    </div>
+                    <div class="input-field">
+                        <label for="confirm-password">Powtórz hasło</label>
+                        <input id="confirm-password" type="password" required>
+                    </div>
+                </div>
+                <p class="password-requirements">Hasło powinno zawierać: min. 8 znaków, liczbę, małą literę i wielką literę</p>
+                <button type="submit" class="submit-btn">Załóż konto</button>
+            </form>
+        </div>
+        <div class="image-container">
+            <img src="~/img/kino.png" alt="Registration Illustration">
+        </div>
+    </div>
+</body>

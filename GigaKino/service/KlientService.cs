@@ -103,5 +103,40 @@ namespace GigaKino.Services
                 return null;
             }
         }
+
+        public async Task<KlientDTO?> RegisterKlientAsync(KlientDTO klientDTO)
+        {
+            
+            try
+            {
+                if (klientDTO.Konto == null || string.IsNullOrWhiteSpace(klientDTO.Konto.Haslo))
+                {
+                    throw new ArgumentException("Password is required for registration");
+                }
+
+           
+
+                var konto = new Konto
+                {
+                    Login = klientDTO.Mail,
+                    Haslo = klientDTO.Konto.Haslo,
+                    Typ = klientDTO.Konto.Typ,
+                    Sol = klientDTO.Konto.Haslo
+                };
+
+                var klient = _mapper.Map<Klient>(klientDTO);
+                klient.Konto = konto;
+
+                _context.Klienci.Add(klient);
+                await _context.SaveChangesAsync();
+
+                return _mapper.Map<KlientDTO>(klient);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("RegisterKlientAsync failed:" + ex);
+                return null;
+            }
+        }
     }
 }

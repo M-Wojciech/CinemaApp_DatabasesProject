@@ -68,5 +68,17 @@ namespace GigaKino.Controllers
 
             return NoContent();
         }
+
+        [HttpGet("film/{filmId}")]
+        public async Task<ActionResult<IEnumerable<SeansDTO>>> GetSeansByFilmId(uint filmId)
+        {
+            var seanse = await _seansService.GetSeansByFilmIdAsync(filmId);
+            if (seanse == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(seanse);
+        }
     }
 }
