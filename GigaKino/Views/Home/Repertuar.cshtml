@@ -1,4 +1,4 @@
-﻿@model IEnumerable<GigaKino.ObjectsDTO.RepertuarItemDTO>
+@model IEnumerable<GigaKino.ObjectsDTO.RepertuarItemDTO>
 @{
     ViewData["Title"] = "Repertuar";
 }
@@ -47,6 +47,27 @@
     <label id="dzisiaj"></label>
     <section class="movies">
         <article class="movie">
+            @if (Model != null && Model.Any())
+            {
+                @* foreach (var seans in Model)
+                {
+                    <img src="@seans.Film.PosterPath" alt="poster">
+                    <div class="details">
+                        <h2>@seans.Film.Tytul</h2>
+                        <p>@seans.Film.Gatunek | @seans.Film.Ogr_wiekowe | @seans.Film.Dlugosc</p>
+                        <div class="showtimes">
+                            <button>19:30<br>2D, Napisy</button>
+                            <button>20:30<br>IMAX, PL</button>
+                        </div>
+                    </div>
+                } *@
+            }
+            else
+            {
+                <p>Brak dostępnych filmów.</p>
+            }
+        </article>
+        <!--<article class="movie">
             <img src="~/img/diuna.jpg" alt="Diuna: Część Druga">
             <div class="details">
                 <h2>DIUNA: CZĘŚĆ DRUGA</h2>
@@ -76,6 +97,6 @@
                     <button>18:10<br>2D, PL</button>
                 </div>
             </div>
-        </article>
+        </article>-->
     </section>
 </div>
