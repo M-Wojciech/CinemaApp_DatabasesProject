@@ -1,4 +1,5 @@
 using GigaKino.ObjectsDTO;
+using GigaKino.Services;
 using GigaKino.ServicesInterfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,7 +8,7 @@ namespace GigaKino.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class SeansController : ControllerBase
+    public class SeansController : Controller
     {
         private readonly ISeansService _seansService;
 
@@ -67,18 +68,6 @@ namespace GigaKino.Controllers
             }
 
             return NoContent();
-        }
-
-        [HttpGet("film/{filmId}")]
-        public async Task<ActionResult<IEnumerable<SeansDTO>>> GetSeansByFilmId(uint filmId)
-        {
-            var seanse = await _seansService.GetSeansByFilmIdAsync(filmId);
-            if (seanse == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(seanse);
         }
     }
 }

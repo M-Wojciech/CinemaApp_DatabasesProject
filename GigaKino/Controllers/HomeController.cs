@@ -2,6 +2,7 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using GigaKino.Models;
 using GigaKino.ServicesInterfaces;
+using GigaKino.Services;
 
 namespace GigaKino.Controllers;
 
@@ -9,11 +10,13 @@ public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
     private readonly IFilmService _filmService;
+    private readonly ISeansService _seansService;
 
-    public HomeController(ILogger<HomeController> logger, IFilmService filmService)
+    public HomeController(ILogger<HomeController> logger, IFilmService filmService, ISeansService seansService)
     {
         _logger = logger;
         _filmService = filmService;
+        _seansService = seansService;
     }
 
     public async Task<IActionResult> Index()
@@ -26,9 +29,14 @@ public class HomeController : Controller
         return View(filmy);
     }
 
-    public IActionResult Repertuar()
+    public async Task<IActionResult> Repertuar()
     {
-        return View();
+        var seans = await _seansService.GetAllSeanseAsync();
+        if (seans == null)
+        {
+            return StatusCode(500, "Internal server error");
+        }
+        return View(seans);
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

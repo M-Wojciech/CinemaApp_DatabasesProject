@@ -1,0 +1,63 @@
+﻿@model GigaKino.ObjectsDTO.SeansDTO
+@{
+    ViewData["Title"] = Model.Film;
+}
+
+@section Head{
+    <meta charset="UTF-8">
+    <title>GigaKino_bilety</title>
+    <link href="https://fonts.googleapis.com/css2?family=Istok+Web&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/bilety_style.css">
+}
+
+<div class="movie-details">
+    <img src="~/img/diuna.jpg" alt="Movie Poster" class="poster">
+    <div class="details">
+        <h2>DIUNA: CZĘŚĆ DRUGA</h2>
+        <p class="opis">Sci-Fi | od 13 lat | 165 min</p>
+        <p class="opis">Sobota 13.0<br>Wrocław - Wroclavia, Sala 3</p>
+        <p class="seans">19:30, 2D, Napisy</p>
+    </div>
+</div>
+<div class="tickets">
+    <h2>Wybierz bilet</h2>
+    <div class="ticket-selector">
+        <table>
+            <thead>
+                <tr>
+                    <th>Rodzaj</th>
+                    <th>Cena</th>
+                    <th>Ilość</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>NORMALNY</strong></td>
+                    <td>29.90 zł</td>
+                    <td>
+                        <button class="quantity-btn">-</button>
+                        <input type="text" value="0" class="quantity-input">
+                        <button class="quantity-btn">+</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>ULGOWY</strong>
+                        <br>(Dziecko / Student / Senior / Weteran)
+                    </td>
+                    <td>25.90 zł</td>
+                    <td>
+                        <button class="quantity-btn">-</button>
+                        <input type="text" value="1" class="quantity-input">
+                        <button class="quantity-btn">+</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="buttons">
+            <button class="back-btn">Wstecz</button>
+            <button class="next-btn">Wybierz miejsca</button>
+        </div>
+    </div>
+</div>
