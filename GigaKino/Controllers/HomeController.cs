@@ -9,11 +9,13 @@ public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
     private readonly IFilmService _filmService;
+    private readonly IRepertuarService _repertuarService;
 
-    public HomeController(ILogger<HomeController> logger, IFilmService filmService)
+    public HomeController(ILogger<HomeController> logger, IFilmService filmService, IRepertuarService aaa)
     {
         _logger = logger;
         _filmService = filmService;
+        _repertuarService = aaa;
     }
 
     public async Task<IActionResult> Index()
@@ -26,9 +28,10 @@ public class HomeController : Controller
         return View(filmy);
     }
 
-    public IActionResult Repertuar()
+    public async Task<IActionResult> Repertuar()
     {
-        return View();
+        var repertuar = await _repertuarService.GetRepertuarAsync(1);
+        return View(repertuar);
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

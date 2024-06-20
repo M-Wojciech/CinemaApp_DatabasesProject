@@ -26,6 +26,7 @@ builder.Services.AddScoped<ITransakcjaService, TransakcjaService>();
 builder.Services.AddScoped<IKlientService, KlientService>();
 builder.Services.AddScoped<IKontoService, KontoService>();
 builder.Services.AddScoped<IPracownikService, PracownikService>();
+builder.Services.AddScoped<IRepertuarService, RepertuarService>();
 
 string? connectionString;
 if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
@@ -40,16 +41,9 @@ if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
     {
         throw new PlatformNotSupportedException("Unsupported OS platform");
 }
-Console.WriteLine(connectionString);
-
-var a = File.Exists("/home/site/wwwroot/Certs/server-ca.pem");
-Console.WriteLine("server-ca.pem = "+a);
-a = File.Exists("/home/site/wwwroot/Certs/client-key.pem");
-Console.WriteLine("client-key.pem = "+a);
-a = File.Exists("/home/site/wwwroot/Certs/client-cert.pem");
-Console.WriteLine("client-cert.pem = "+a);
 
 builder.Services.AddDbContext<KinoContext>(options => options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+
 
 var app = builder.Build();
 Console.WriteLine("app built");

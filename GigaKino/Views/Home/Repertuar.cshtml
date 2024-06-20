@@ -1,4 +1,5 @@
-﻿@{
+﻿@model IEnumerable<GigaKino.ObjectsDTO.RepertuarItemDTO>
+@{
     ViewData["Title"] = "Repertuar";
 }
 @section Head{
@@ -18,6 +19,7 @@
             <option value="wroclawia">Wrocław - Wroclavia</option>
             <option value="pasaz">Wrocław - Pasaż</option>
             <option value="katowice">Katowice</option>
+    using GigaKino.ObjectsDTO;
         </select>
     </section>
     <div class="date-selection">

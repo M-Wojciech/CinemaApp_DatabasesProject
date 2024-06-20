@@ -1,5 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using GigaKino.Models;
+using System.Text.Json.Nodes;
+using MySqlConnector;
+using System.Data;
 
 namespace Database
 {
