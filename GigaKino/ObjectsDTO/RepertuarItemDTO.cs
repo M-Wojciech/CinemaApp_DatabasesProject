@@ -17,10 +17,10 @@ namespace GigaKino.ObjectsDTO
     public class WersjaTechnologiczna(string technologia, string wersjaJezykowa, uint idSeans, DateTime termin)
     {
         public  string Wersja { get; set; } = technologia;
-        public  List<WersjaJezykowa> ListaWersjiJezykowych { get; set; } = [new(idSeans, termin, wersjaJezykowa)];
+        public  List<WersjaJezykowa> ListaWersjiJezykowych { get; set; } = [new(wersjaJezykowa, idSeans, termin)];
     }
 
-    public class WersjaJezykowa (uint idSeans, DateTime termin, string wersjaJezykowa)
+    public class WersjaJezykowa (string wersjaJezykowa, uint idSeans, DateTime termin)
     {
         public  string Wersja { get; set; } = wersjaJezykowa;
         public  List<Repertuar_Seans> ListaSeansow { get; set; } = [new(idSeans, termin)];
