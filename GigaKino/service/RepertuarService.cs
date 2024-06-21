@@ -52,7 +52,7 @@ namespace GigaKino.Services
                     int filmIndex = results.FindIndex(item => item.IdFilm == reader.GetUInt32("idFilm"));
                     if (filmIndex < 0)
                     {
-                        results.Add(new RepertuarItemDTO(reader.GetUInt32("idFilm"),reader.GetString("Tytul"),reader.GetInt32("Ogr_wiekowe"),reader.GetString("Gatunek"),reader.GetString("PosterPath"),reader.GetInt32("Dlugosc"),reader.GetString("Technologia"),reader.GetString("Wersja_Jezykowa"),reader.GetUInt32("idSeans"),reader.GetDateTime("Termin")));
+                        results.Add(new RepertuarItemDTO(reader.GetUInt32("idFilm"),reader.GetString("Tytul"),reader.GetInt32("Ogr_wiekowe"),reader.GetString("PosterPath"),reader.GetString("Gatunek"),reader.GetInt32("Dlugosc"),reader.GetString("Technologia"),reader.GetString("Wersja_Jezykowa"),reader.GetUInt32("idSeans"),reader.GetDateTime("Termin")));
                     }
                     else
                     {
@@ -66,7 +66,7 @@ namespace GigaKino.Services
                             int jezykIndex = results[filmIndex].ListaWersjiTechnologicznych[techIndex].ListaWersjiJezykowych.FindIndex(item => item.Wersja == reader.GetString("Wersja_Jezykowa"));
                             if (jezykIndex < 0)
                             {
-                                results[filmIndex].ListaWersjiTechnologicznych[techIndex].ListaWersjiJezykowych.Add(new WersjaJezykowa(reader.GetUInt32("idSeans"),reader.GetDateTime("Termin"),reader.GetString("Wersja_Jezykowa")));
+                                results[filmIndex].ListaWersjiTechnologicznych[techIndex].ListaWersjiJezykowych.Add(new WersjaJezykowa(reader.GetString("Wersja_Jezykowa"), reader.GetUInt32("idSeans"),reader.GetDateTime("Termin")));
                             }
                             else
                             {

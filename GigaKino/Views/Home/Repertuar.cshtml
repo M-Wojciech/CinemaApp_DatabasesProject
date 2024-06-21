@@ -46,6 +46,7 @@
     </div>
     <label id="dzisiaj"></label>
     <section class="movies">
+<<<<<<< HEAD
         <!--<article class="movie">-->
             @if (Model != null && Model.Any())
             {
@@ -56,12 +57,42 @@
                     <div class="details">
                         <h2>@repertual.Tytul</h2>
                         <p>@repertual.PosterPath | @repertual.Ogr_wiekowe | @repertual.Dlugosc</p>
+=======
+        <article class="movie">
+            @if (Model != null)
+            {
+                foreach (var Film in Model)
+                {
+                    <img src="@Film.PosterPath" alt="poster">
+                    <div class="details">
+                        <h2>@Film.Tytul</h2>
+                        <p>@Film.Gatunek | @Film.Ogr_wiekowe | @Film.Dlugosc</p>
+>>>>>>> abdcc5dd7578c83c19932f15e225894482c97959
                         <div class="showtimes">
-                            <button>19:30<br>2D, Napisy</button>
-                            <button>20:30<br>IMAX, PL</button>
+                            @foreach (var Technology in Film.ListaWersjiTechnologicznych)
+                            {
+                                <div class="tech_version">
+                                    <p>@Technology.Wersja</p>
+                                    <div class="lang_version">
+                                        @foreach (var lang in Technology.ListaWersjiJezykowych)
+                                        {
+                                            <div class="lang_version">
+                                                <p>@lang.Wersja</p>
+                                                @foreach (var screening in lang.ListaSeansow)
+                                                {
+                                                    <button>@screening.Termin.ToString("HH.mm")</button>
+                                                }
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            }
                         </div>
                     </div>
+<<<<<<< HEAD
                     </article>
+=======
+>>>>>>> abdcc5dd7578c83c19932f15e225894482c97959
                 }
             }
             else
