@@ -1,3 +1,4 @@
+@using GigaKino.ObjectsDTO
 @model IEnumerable<GigaKino.ObjectsDTO.RepertuarItemDTO>
 @{
     ViewData["Title"] = "Repertuar";
@@ -10,6 +11,36 @@
     <link rel="stylesheet" href="~/css/repertuar_style.css">
     <script src="~/js/function.js" defer></script>
     <script src="~/js/repertuar_fun.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#gatunek-select').on('change', function () {
+                var selectedTechnology = $(this).val();
+
+                $('.movie').each(function () {
+                    var movie = $(this);
+                    var show = false;
+
+                    movie.find('.showtimes button').each(function () {
+                        var button = $(this);
+                        var buttonText = button.text();
+                        if (buttonText.includes(selectedTechnology)) {
+                            button.parent().show();
+                            show = true;
+                        } else {
+                            button.parent().hide();
+                        }
+                    });
+
+                    if (show) {
+                        movie.show();
+                    } else {
+                        movie.hide();
+                    }
+                });
+            });
+        });
+    </script>
 }
 
 <!--<div class="outer-container">-->
@@ -35,64 +66,49 @@
         <label for="date-input" class="date-label">
             <input type="date" id="date-input">
         </label>
+    @{
+        var uniqueTechnologies = Model.SelectMany(film => film.ListaWersjiTechnologicznych)
+            .Select(tech => tech.Wersja)
+            .Distinct()
+            .ToList();
+    }
         <select name="gatunek" id="gatunek-select">
             <option value="0">Rodzaj seansu</option>
-            <option value="1">Wszystkie</option>
-            <option value="2">2D</option>
-            <option value="3">3D</option>
-            <option value="4">IMAX</option>
-            <option value="5">VIP</option>
-        </select>
-    </div>
+        @foreach (var tech in uniqueTechnologies)
+        {
+            <option value="@tech">@tech</option>
+        }
+    </select>
+</div>
     <label id="dzisiaj"></label>
     <section class="movies">
-<<<<<<< HEAD
-        <!--<article class="movie">-->
-            @if (Model != null && Model.Any())
-            {
-                foreach (var repertual in Model)
-                {
-                    <article class="movie">
-                    <img src="@repertual.Gatunek" alt="poster">
-                    <div class="details">
-                        <h2>@repertual.Tytul</h2>
-                        <p>@repertual.PosterPath | @repertual.Ogr_wiekowe | @repertual.Dlugosc</p>
-=======
-        <article class="movie">
             @if (Model != null)
             {
                 foreach (var Film in Model)
                 {
+                    <article class="movie">
                     <img src="@Film.PosterPath" alt="poster">
                     <div class="details">
                         <h2>@Film.Tytul</h2>
-                        <p>@Film.Gatunek | @Film.Ogr_wiekowe | @Film.Dlugosc</p>
->>>>>>> abdcc5dd7578c83c19932f15e225894482c97959
-                        <div class="showtimes">
-                            @foreach (var Technology in Film.ListaWersjiTechnologicznych)
+                    <p>@Film.Gatunek | @Film.Ogr_wiekowe | @Film.Dlugosc</p>
+                    <div class="showtimes">
+                         @foreach (var Technology in Film.ListaWersjiTechnologicznych)
+                        {
+                            
+                            @foreach (var lang in Technology.ListaWersjiJezykowych)
                             {
-                                <div class="tech_version">
-                                    <p>@Technology.Wersja</p>
-                                    <div class="lang_version">
-                                        @foreach (var lang in Technology.ListaWersjiJezykowych)
-                                        {
-                                            <div class="lang_version">
-                                                <p>@lang.Wersja</p>
-                                                @foreach (var screening in lang.ListaSeansow)
-                                                {
-                                                    <button>@screening.Termin.ToString("HH.mm")</button>
-                                                }
-                                            </div>
-                                        }
-                                    </div>
-                                </div>
+                                @foreach (var screening in lang.ListaSeansow)
+                                {
+                                    <a asp-area="" asp-controller="Seans" asp-action="Index">
+                                        <button>@screening.Termin.ToString("HH:mm")<br />@Technology.Wersja, @lang.Wersja</button>
+                                    </a>
+                                }
                             }
+                            
+                        }
                         </div>
                     </div>
-<<<<<<< HEAD
                     </article>
-=======
->>>>>>> abdcc5dd7578c83c19932f15e225894482c97959
                 }
             }
             else

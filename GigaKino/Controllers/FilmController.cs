@@ -1,4 +1,5 @@
 using GigaKino.ObjectsDTO;
+using GigaKino.Services;
 using GigaKino.ServicesInterfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,10 +11,13 @@ namespace GigaKino.Controllers
     public class FilmController : Controller
     {
         private readonly IFilmService _filmService;
+        private readonly ISeansService _seansService;
 
-        public FilmController(IFilmService filmService)
+
+        public FilmController(IFilmService filmService, ISeansService seansService)
         {
             _filmService = filmService;
+            _seansService = seansService;
         }
 
         [HttpPost]

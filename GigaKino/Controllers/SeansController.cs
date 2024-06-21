@@ -81,5 +81,10 @@ namespace GigaKino.Controllers
 
             return Ok(seanse);
         }
+
+        public IActionResult Index()
+        {
+            return View();
+        }
     }
 }
