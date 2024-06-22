@@ -21,7 +21,7 @@ namespace GigaKino.Models
 
         [Required]
         [DataType(DataType.Date)]
-        public DateTime DataUrodzenia { get; set; }
+        public DateTime Data_Urodzenia { get; set; }
 
         [Required]
         [StringLength(30)]

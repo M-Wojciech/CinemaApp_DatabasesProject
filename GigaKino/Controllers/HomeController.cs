@@ -59,20 +59,15 @@ public class HomeController : Controller
 
     public async Task<IActionResult> StronaTestowa2(uint idSeans)
     {
-        Console.WriteLine("-------- given id: " + idSeans);
         var seans = await _seansService.GetSeansByIdAsync(idSeans);
         if (seans == null)
             return StatusCode(500, "Internal server error");
-        Console.WriteLine("-------- seans id: " + seans.IdSeans);
         var film = await _filmService.GetFilmByIdAsync(seans.IdFilm);
         if (film == null)
             return StatusCode(500, "Internal server error");
-        Console.WriteLine("-------- film id: " + film.IdFilm);
-        Console.WriteLine("-------- film id: " + film.Tytul);
         var sala = await _salaService.GetSalaByIdAsync(seans.IdSala);
         if (sala == null)
             return NotFound();
-        Console.WriteLine("-------- sala id: " + sala.IdSala);
         var kino = await _kinoService.GetKinoByIdAsync(sala.IdKino);
         if (kino == null)
             return NotFound();

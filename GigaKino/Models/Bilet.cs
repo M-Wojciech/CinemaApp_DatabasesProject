@@ -11,7 +11,7 @@ namespace GigaKino.Models
         public uint IdBilet { get; set; }
 
         [Required]
-        public int Cen_Faktyczna { get; set; }
+        public int Cena_Faktyczna { get; set; }
 
         [StringLength(20)]
         public string? Ulga { get; set; }
