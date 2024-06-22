@@ -28,7 +28,7 @@ namespace GigaKino.Services
             "JOIN Sala ON Seans.idSala = Sala.idSala "+
             $"WHERE Sala.idKino = @kino_id "+
             $"AND (@tytul_filmu IS NULL OR Film.Tytul = @tytul_filmu) "+
-            $"AND (@gatunek IS NULL OR Film.Gatunek = @gatunek) "+
+            $"AND (@gatunek IS NULL OR Film.Gatunek LIKE @gatunek) "+
             $"AND (@technologia IS NULL OR Seans.Technologia = @technologia) "+
             $"AND (@wersja_jezykowa IS NULL OR Seans.Wersja_jezykowa = @wersja_jezykowa )";
 
@@ -42,7 +42,7 @@ namespace GigaKino.Services
 
                 cmd.Parameters.Add(new MySqlParameter("@kino_id", MySqlDbType.UInt32) { Value = kinoId });
                 cmd.Parameters.Add(new MySqlParameter("@tytul_filmu", MySqlDbType.VarChar, 100) { Value = string.IsNullOrEmpty(tytulFilmu) ? (object)DBNull.Value : tytulFilmu });
-                cmd.Parameters.Add(new MySqlParameter("@gatunek", MySqlDbType.VarChar, 50) { Value = string.IsNullOrEmpty(gatunek) ? (object)DBNull.Value : gatunek });
+                cmd.Parameters.Add(new MySqlParameter("@gatunek", MySqlDbType.VarChar, 50) { Value = string.IsNullOrEmpty(gatunek) ? (object)DBNull.Value : "%"+gatunek+"%" });
                 cmd.Parameters.Add(new MySqlParameter("@technologia", MySqlDbType.VarChar, 30) { Value = string.IsNullOrEmpty(technologia) ? (object)DBNull.Value : technologia });
                 cmd.Parameters.Add(new MySqlParameter("@wersja_jezykowa", MySqlDbType.VarChar, 20) { Value = string.IsNullOrEmpty(wersjaJezykowa) ? (object)DBNull.Value : wersjaJezykowa });
 
