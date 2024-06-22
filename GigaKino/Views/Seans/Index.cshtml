@@ -1,9 +1,10 @@
-﻿@{
-   
+﻿@using GigaKino.ObjectsDTO
+@model Tuple<SeansDTO, FilmDTO, SalaDTO, KinoDTO>
+@{
+    ViewData["Title"] = "Index";
 }
-
 @section Head{
-    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width" />
     <title>GigaKino_bilety</title>
     <link href="https://fonts.googleapis.com/css2?family=Istok+Web&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&display=swap" rel="stylesheet">
@@ -11,12 +12,12 @@
 }
 
 <div class="movie-details">
-    <img src="~/img/diuna.jpg" alt="Movie Poster" class="poster">
+    <img src="@Model.Item2.PosterPath" alt="Movie Poster" class="poster">
     <div class="details">
-        <h2>DIUNA: CZĘŚĆ DRUGA</h2>
-        <p class="opis">Sci-Fi | od 13 lat | 165 min</p>
-        <p class="opis">Sobota 13.0<br>Wrocław - Wroclavia, Sala 3</p>
-        <p class="seans">19:30, 2D, Napisy</p>
+        <h2>@Model.Item2.Tytul</h2>
+        <p class="opis">@Model.Item2.Gatunek | od @Model.Item2.Ogr_wiekowe lat | @Model.Item2.Dlugosc min</p>
+        <p class="opis">@Model.Item1.Termin.ToString("dddd dd.MM.yyyy")<br>@Model.Item4.Nazwa, Sala @Model.Item3.Numer</p>
+        <p class="seans">@Model.Item1.Termin.ToString("HH:mm"), @Model.Item1.Technologia, @Model.Item1.WersjaJezykowa</p>
     </div>
 </div>
 <div class="tickets">
@@ -33,10 +34,11 @@
             <tbody>
                 <tr>
                     <td><strong>NORMALNY</strong></td>
-                    <td>29.90 zł</td>
+                    <td>@Model.Item1.CenaDomyslna zł</td>
+                    <!--<td>29.90 zł</td>-->
                     <td>
                         <button class="quantity-btn">-</button>
-                        <input type="text" value="0" class="quantity-input">
+                        <input type="text" value="1" class="quantity-input">
                         <button class="quantity-btn">+</button>
                     </td>
                 </tr>

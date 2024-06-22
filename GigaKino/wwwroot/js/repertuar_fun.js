@@ -50,6 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Initial update on load
-    updateDisplay(today, true);
+    // Initial update on loa
+    updateDisplay(today, true)
+
 });

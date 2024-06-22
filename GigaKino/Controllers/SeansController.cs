@@ -11,10 +11,16 @@ namespace GigaKino.Controllers
     public class SeansController : Controller
     {
         private readonly ISeansService _seansService;
+        private readonly IFilmService _filmService;
+        private readonly ISalaService _salaService;
+        private readonly IKinoService _kinoService;
 
-        public SeansController(ISeansService seansService)
+        public SeansController(ISeansService seansService, IFilmService filmService, ISalaService salaService, IKinoService kinoService)
         {
             _seansService = seansService;
+            _filmService = filmService;
+            _salaService = salaService;
+            _kinoService = kinoService;
         }
 
         [HttpPost]
@@ -82,9 +88,36 @@ namespace GigaKino.Controllers
             return Ok(seanse);
         }
 
+        /*[HttpGet("index")]
         public IActionResult Index()
         {
             return View();
+        }*/
+
+        [HttpGet("index")]
+        public async Task<IActionResult> Index(uint idSeans)
+        {
+            Console.WriteLine("-------- given id: " + idSeans);
+            var seans = await _seansService.GetSeansByIdAsync(idSeans);
+            if (seans == null)
+                return StatusCode(500, "Internal server error");
+            Console.WriteLine("-------- seans id: " + seans.IdSeans);
+            var film = await _filmService.GetFilmByIdAsync(seans.IdFilm);
+            if (film == null)
+                return StatusCode(500, "Internal server error");
+            Console.WriteLine("-------- film id: " + film.IdFilm);
+            Console.WriteLine("-------- film id: " + film.Tytul);
+            var sala = await _salaService.GetSalaByIdAsync(seans.IdSala);
+            if (sala == null)
+                return NotFound();
+            Console.WriteLine("-------- sala id: " + sala.IdSala);
+            var kino = await _kinoService.GetKinoByIdAsync(sala.IdKino);
+            if (kino == null)
+                return NotFound();
+
+            var model = new Tuple<SeansDTO, FilmDTO, SalaDTO, KinoDTO>(seans, film, sala, kino);//, KinoDTO>(seans, film, sala, kino);
+
+            return View(model);
         }
     }
 }
