@@ -11,14 +11,14 @@ namespace GigaKino.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public uint IdTransakcja { get; set; }
 
-        public int? CenaLaczna { get; set; }
+        public int? Cena_Laczna { get; set; }
 
         [Required]
         [DataType(DataType.DateTime)]
-        public DateTime CzasRozpoczecia { get; set; }
+        public DateTime Czas_Rozpoczecia { get; set; }
 
         [DataType(DataType.DateTime)]
-        public DateTime? CzasZakupu { get; set; }
+        public DateTime? Czas_Zakupu { get; set; }
 
         [Required]
         public bool Status { get; set; }
