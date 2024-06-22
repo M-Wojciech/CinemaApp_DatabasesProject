@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GigaKino.Models
 {
+    [Table("Bilet")]
     public class Bilet
     {
         [Key]
@@ -10,7 +11,7 @@ namespace GigaKino.Models
         public uint IdBilet { get; set; }
 
         [Required]
-        public int CenaFaktyczna { get; set; }
+        public int Cen_Faktyczna { get; set; }
 
         [StringLength(20)]
         public string? Ulga { get; set; }

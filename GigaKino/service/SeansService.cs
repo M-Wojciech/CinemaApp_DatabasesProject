@@ -18,14 +18,14 @@ namespace GigaKino.Services
             _mapper = mapper;
         }
 
-        public async Task<SeansDTO?> CreateSeansAsync(SeansDTO klientDTO)
+        public async Task<SeansDTO?> CreateSeansAsync(SeansDTO seansDTO)
         {
             try
             {
-                var klient = _mapper.Map<Seans>(klientDTO);
-                _context.Seanse.Add(klient);
+                var seans = _mapper.Map<Seans>(seansDTO);
+                _context.Seanse.Add(seans);
                 await _context.SaveChangesAsync();
-                return _mapper.Map<SeansDTO>(klient);
+                return _mapper.Map<SeansDTO>(seans);
             }
             catch (Exception ex)
             {
@@ -38,8 +38,8 @@ namespace GigaKino.Services
         {
             try
             {
-                var klient = await _context.Seanse.FindAsync(id);
-                return _mapper.Map<SeansDTO>(klient);
+                var seans = await _context.Seanse.FindAsync(id);
+                return _mapper.Map<SeansDTO>(seans);
             }
             catch (Exception ex)
             {
@@ -62,7 +62,7 @@ namespace GigaKino.Services
             }
         }
 
-        public async Task<SeansDTO?> UpdateSeansAsync(uint id, SeansDTO klientDTO)
+        public async Task<SeansDTO?> UpdateSeansAsync(uint id, SeansDTO seansDTO)
         {
             try
             {
@@ -73,7 +73,7 @@ namespace GigaKino.Services
                     return null;
                 }
 
-                _mapper.Map(klientDTO, existingSeans);
+                _mapper.Map(seansDTO, existingSeans);
                 _context.Seanse.Update(existingSeans);
                 await _context.SaveChangesAsync();
                 return _mapper.Map<SeansDTO>(existingSeans);
@@ -89,11 +89,11 @@ namespace GigaKino.Services
         {
             try
             {
-                var klient = await _context.Seanse.FindAsync(id);
-                if (klient == null)
+                var seans = await _context.Seanse.FindAsync(id);
+                if (seans == null)
                     return false;
 
-                _context.Seanse.Remove(klient);
+                _context.Seanse.Remove(seans);
                 await _context.SaveChangesAsync();
                 return true;
             }

@@ -4,6 +4,7 @@ using Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GigaKino.Migrations
 {
     [DbContext(typeof(KinoContext))]
-    partial class KinoContextModelSnapshot : ModelSnapshot
+    [Migration("20240622134210_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,7 +33,7 @@ namespace GigaKino.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<uint>("IdBilet"));
 
-                    b.Property<int>("Cen_Faktyczna")
+                    b.Property<int>("CenaFaktyczna")
                         .HasColumnType("int");
 
                     b.Property<uint>("IdMiejsce")
@@ -54,7 +57,7 @@ namespace GigaKino.Migrations
 
                     b.HasIndex("IdTransakcja");
 
-                    b.ToTable("Bilet");
+                    b.ToTable("Bilety");
                 });
 
             modelBuilder.Entity("GigaKino.Models.Film", b =>
@@ -139,7 +142,7 @@ namespace GigaKino.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("varchar(50)");
 
-                    b.Property<string>("Numer_Budynku")
+                    b.Property<string>("NumerBudynku")
                         .IsRequired()
                         .HasMaxLength(5)
                         .HasColumnType("varchar(5)");
@@ -151,7 +154,7 @@ namespace GigaKino.Migrations
 
                     b.HasKey("IdKino");
 
-                    b.ToTable("Kino");
+                    b.ToTable("Kina");
                 });
 
             modelBuilder.Entity("GigaKino.Models.Klient", b =>
@@ -182,7 +185,7 @@ namespace GigaKino.Migrations
 
                     b.HasIndex("IdKonto");
 
-                    b.ToTable("Klient");
+                    b.ToTable("Klienci");
                 });
 
             modelBuilder.Entity("GigaKino.Models.Konto", b =>
@@ -215,7 +218,7 @@ namespace GigaKino.Migrations
 
                     b.HasKey("IdKonto");
 
-                    b.ToTable("Konto");
+                    b.ToTable("Konta");
                 });
 
             modelBuilder.Entity("GigaKino.Models.Miejsce", b =>
@@ -239,7 +242,7 @@ namespace GigaKino.Migrations
 
                     b.HasIndex("IdSala");
 
-                    b.ToTable("Miejsce");
+                    b.ToTable("Miejsca");
                 });
 
             modelBuilder.Entity("GigaKino.Models.Pracownik", b =>
@@ -275,7 +278,7 @@ namespace GigaKino.Migrations
 
                     b.HasIndex("IdKonto");
 
-                    b.ToTable("Pracownik");
+                    b.ToTable("Pracownicy");
                 });
 
             modelBuilder.Entity("GigaKino.Models.Sala", b =>
@@ -296,7 +299,7 @@ namespace GigaKino.Migrations
 
                     b.HasIndex("IdKino");
 
-                    b.ToTable("Sala");
+                    b.ToTable("Sale");
                 });
 
             modelBuilder.Entity("GigaKino.Models.Seans", b =>
@@ -366,7 +369,7 @@ namespace GigaKino.Migrations
 
                     b.HasIndex("IdKlient");
 
-                    b.ToTable("Transakcja");
+                    b.ToTable("Transakcje");
                 });
 
             modelBuilder.Entity("GigaKino.Models.Bilet", b =>

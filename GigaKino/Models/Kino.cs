@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GigaKino.Models
 {
+    [Table("Kino")]
     public class Kino
     {
         [Key]
@@ -23,6 +24,6 @@ namespace GigaKino.Models
 
         [Required]
         [StringLength(5)]
-        public required string NumerBudynku { get; set; }
+        public required string Numer_Budynku { get; set; }
     }
 }

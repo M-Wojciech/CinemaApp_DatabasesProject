@@ -181,31 +181,31 @@ namespace GigaKino.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "Seanse",
+                name: "Seans",
                 columns: table => new
                 {
-                    IdSeans = table.Column<uint>(type: "int unsigned", nullable: false)
+                    idSeans = table.Column<uint>(type: "int unsigned", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Termin = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     Technologia = table.Column<string>(type: "varchar(30)", maxLength: 30, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    WersjaJezykowa = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: false)
+                    Wersja_Jezykowa = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    CenaDomyslna = table.Column<int>(type: "int", nullable: false),
+                    Cena_Domyslna = table.Column<int>(type: "int", nullable: false),
                     IdFilm = table.Column<uint>(type: "int unsigned", nullable: false),
                     IdSala = table.Column<uint>(type: "int unsigned", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Seanse", x => x.IdSeans);
+                    table.PrimaryKey("PK_Seans", x => x.idSeans);
                     table.ForeignKey(
-                        name: "FK_Seanse_Film_IdFilm",
+                        name: "FK_Seans_Film_IdFilm",
                         column: x => x.IdFilm,
                         principalTable: "Film",
                         principalColumn: "IdFilm",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Seanse_Sale_IdSala",
+                        name: "FK_Seans_Sale_IdSala",
                         column: x => x.IdSala,
                         principalTable: "Sale",
                         principalColumn: "IdSala",
@@ -259,10 +259,10 @@ namespace GigaKino.Migrations
                         principalColumn: "IdMiejsce",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Bilety_Seanse_IdSeans",
+                        name: "FK_Bilety_Seans_IdSeans",
                         column: x => x.IdSeans,
-                        principalTable: "Seanse",
-                        principalColumn: "IdSeans",
+                        principalTable: "Seans",
+                        principalColumn: "idSeans",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Bilety_Transakcje_IdTransakcja",
@@ -309,13 +309,13 @@ namespace GigaKino.Migrations
                 column: "IdKino");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Seanse_IdFilm",
-                table: "Seanse",
+                name: "IX_Seans_IdFilm",
+                table: "Seans",
                 column: "IdFilm");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Seanse_IdSala",
-                table: "Seanse",
+                name: "IX_Seans_IdSala",
+                table: "Seans",
                 column: "IdSala");
 
             migrationBuilder.CreateIndex(
@@ -337,7 +337,7 @@ namespace GigaKino.Migrations
                 name: "Miejsca");
 
             migrationBuilder.DropTable(
-                name: "Seanse");
+                name: "Seans");
 
             migrationBuilder.DropTable(
                 name: "Transakcje");

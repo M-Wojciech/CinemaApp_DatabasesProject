@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GigaKino.Models
 {
+    [Table("Pracownik")]
     public class Pracownik
     {
         [Key]

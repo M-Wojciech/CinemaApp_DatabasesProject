@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GigaKino.Models
 {
+    [Table("Konto")]
     public class Konto
     {
         [Key]

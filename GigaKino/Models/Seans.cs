@@ -21,10 +21,10 @@ namespace GigaKino.Models
 
         [Required]
         [StringLength(20)]
-        public required string WersjaJezykowa { get; set; }
+        public required string Wersja_Jezykowa { get; set; }
 
         [Required]
-        public int CenaDomyslna { get; set; }
+        public int Cena_Domyslna { get; set; }
 
         [Required]
         public uint IdFilm { get; set; }

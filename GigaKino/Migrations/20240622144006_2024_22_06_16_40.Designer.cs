@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GigaKino.Migrations
 {
     [DbContext(typeof(KinoContext))]
-    [Migration("20240616020025_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20240622144006_2024_22_06_16_40")]
+    partial class _2024_22_06_16_40
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,7 +33,7 @@ namespace GigaKino.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<uint>("IdBilet"));
 
-                    b.Property<int>("CenaFaktyczna")
+                    b.Property<int>("Cen_Faktyczna")
                         .HasColumnType("int");
 
                     b.Property<uint>("IdMiejsce")
@@ -57,7 +57,7 @@ namespace GigaKino.Migrations
 
                     b.HasIndex("IdTransakcja");
 
-                    b.ToTable("Bilety");
+                    b.ToTable("Bilet");
                 });
 
             modelBuilder.Entity("GigaKino.Models.Film", b =>
@@ -142,7 +142,7 @@ namespace GigaKino.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("varchar(50)");
 
-                    b.Property<string>("NumerBudynku")
+                    b.Property<string>("Numer_Budynku")
                         .IsRequired()
                         .HasMaxLength(5)
                         .HasColumnType("varchar(5)");
@@ -154,7 +154,7 @@ namespace GigaKino.Migrations
 
                     b.HasKey("IdKino");
 
-                    b.ToTable("Kina");
+                    b.ToTable("Kino");
                 });
 
             modelBuilder.Entity("GigaKino.Models.Klient", b =>
@@ -185,7 +185,7 @@ namespace GigaKino.Migrations
 
                     b.HasIndex("IdKonto");
 
-                    b.ToTable("Klienci");
+                    b.ToTable("Klient");
                 });
 
             modelBuilder.Entity("GigaKino.Models.Konto", b =>
@@ -218,7 +218,7 @@ namespace GigaKino.Migrations
 
                     b.HasKey("IdKonto");
 
-                    b.ToTable("Konta");
+                    b.ToTable("Konto");
                 });
 
             modelBuilder.Entity("GigaKino.Models.Miejsce", b =>
@@ -242,7 +242,7 @@ namespace GigaKino.Migrations
 
                     b.HasIndex("IdSala");
 
-                    b.ToTable("Miejsca");
+                    b.ToTable("Miejsce");
                 });
 
             modelBuilder.Entity("GigaKino.Models.Pracownik", b =>
@@ -278,7 +278,7 @@ namespace GigaKino.Migrations
 
                     b.HasIndex("IdKonto");
 
-                    b.ToTable("Pracownicy");
+                    b.ToTable("Pracownik");
                 });
 
             modelBuilder.Entity("GigaKino.Models.Sala", b =>
@@ -299,18 +299,19 @@ namespace GigaKino.Migrations
 
                     b.HasIndex("IdKino");
 
-                    b.ToTable("Sale");
+                    b.ToTable("Sala");
                 });
 
             modelBuilder.Entity("GigaKino.Models.Seans", b =>
                 {
                     b.Property<uint>("IdSeans")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int unsigned");
+                        .HasColumnType("int unsigned")
+                        .HasColumnName("idSeans");
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<uint>("IdSeans"));
 
-                    b.Property<int>("CenaDomyslna")
+                    b.Property<int>("Cena_Domyslna")
                         .HasColumnType("int");
 
                     b.Property<uint>("IdFilm")
@@ -327,7 +328,7 @@ namespace GigaKino.Migrations
                     b.Property<DateTime>("Termin")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<string>("WersjaJezykowa")
+                    b.Property<string>("Wersja_Jezykowa")
                         .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("varchar(20)");
@@ -338,7 +339,7 @@ namespace GigaKino.Migrations
 
                     b.HasIndex("IdSala");
 
-                    b.ToTable("Seanse");
+                    b.ToTable("Seans");
                 });
 
             modelBuilder.Entity("GigaKino.Models.Transakcja", b =>
@@ -368,7 +369,7 @@ namespace GigaKino.Migrations
 
                     b.HasIndex("IdKlient");
 
-                    b.ToTable("Transakcje");
+                    b.ToTable("Transakcja");
                 });
 
             modelBuilder.Entity("GigaKino.Models.Bilet", b =>

@@ -4,6 +4,7 @@ using Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GigaKino.Migrations
 {
     [DbContext(typeof(KinoContext))]
-    partial class KinoContextModelSnapshot : ModelSnapshot
+    [Migration("20240622143420_2024_22_06_16_34")]
+    partial class _2024_22_06_16_34
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,7 +33,7 @@ namespace GigaKino.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<uint>("IdBilet"));
 
-                    b.Property<int>("Cen_Faktyczna")
+                    b.Property<int>("CenaFaktyczna")
                         .HasColumnType("int");
 
                     b.Property<uint>("IdMiejsce")
@@ -139,7 +142,7 @@ namespace GigaKino.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("varchar(50)");
 
-                    b.Property<string>("Numer_Budynku")
+                    b.Property<string>("NumerBudynku")
                         .IsRequired()
                         .HasMaxLength(5)
                         .HasColumnType("varchar(5)");
