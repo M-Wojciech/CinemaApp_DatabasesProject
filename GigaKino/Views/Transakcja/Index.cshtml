@@ -1,0 +1,102 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>GigaKino_paying</title>
+    <link href="https://fonts.googleapis.com/css2?family=Istok+Web&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="paying_style.css">
+    <script src="paying_fun.js" defer></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="text-container">
+                <h1>GigaKino</h1>
+            </div>
+        </div>
+        <ul>
+            <li><a>Filmy</a></li>
+            <li><a class="active">Repertuar</a></li>
+        </ul>
+    </header>
+    <main>
+        <section class="order-summary">
+            <h2>Twoje zamówienie</h2>
+            <p>DIUNA: CZĘŚĆ DRUGA 2D, Sobota 13.04 19:30, Wroclavia</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Rodzaj biletu</th>
+                        <th>Ilość</th>
+                        <th>Cena</th>
+                        <th>Sala</th>
+                        <th>Miejsce</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>ULGOWY</td>
+                        <td>1</td>
+                        <td>25.90 zł</td>
+                        <td>3</td>
+                        <td>Rząd 5, miejsce 4</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="total">
+                <strong>Suma:</strong> 25.90 zł
+            </div>
+        </section>
+        <div class="outer-container">
+            <section class="payment">
+                <h2>Sposób płatności</h2>
+                <div class="payment-options">
+                    <label>
+                        <input type="radio" name="payment" value="card" checked>
+                        Debit/credit card
+                        <img src="img/Visa.png" alt="Visa">
+                    </label>
+                    <label>
+                        <input type="radio" name="payment" value="paypal">
+                        PayPal
+                        <img src="img/PayPal.png" alt="PayPal">
+                    </label>
+                    <label>
+                        <input type="radio" name="payment" value="blik">
+                        Blik
+                        <img src="img/blik.png" alt="Blik">
+                    </label>
+                </div>
+            </section>
+            <section class="personal-info">
+                <h2>Twoje dane</h2>
+                <form id="myForm" method="get">
+                    <div class="input-group-horizontal">
+                        <div class="input-field">
+                            <label for="first-name">Imię</label>
+                            <input type="text" id="first-name" required>
+                        </div>
+                        <div class="input-field">
+                            <label for="last-name">Nazwisko</label>
+                            <input type="text" id="last-name" required>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" required>
+                    </div>
+                    <div class="buttons">
+                        <button type="button" class="back-btn" onclick="submitForm('zamowenie.html', false)">Wstecz</button>
+                        <button type="button" class="next-btn" onclick="submitForm('zamowenie.html', true)">Dalej</button>
+                    </div>
+                </form>
+            </section>
+        </div>
+    </main>
+</body>
+</html>

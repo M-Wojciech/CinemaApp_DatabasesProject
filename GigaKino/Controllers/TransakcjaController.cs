@@ -7,7 +7,7 @@ namespace GigaKino.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TransakcjaController : ControllerBase
+    public class TransakcjaController : Controller
     {
         private readonly ITransakcjaService _transakcjaService;
 
@@ -67,6 +67,12 @@ namespace GigaKino.Controllers
             }
 
             return NoContent();
+        }
+
+        [HttpGet("index")]
+        public IActionResult Index()
+        {
+            return View();
         }
     }
 }
