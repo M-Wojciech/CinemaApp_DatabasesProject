@@ -104,7 +104,7 @@ namespace GigaKino.Services
             }
         }
 
-        public async Task<KlientDTO?> RegisterKlientAsync(KlientDTO klientDTO)
+        /*public async Task<KlientDTO?> RegisterKlientAsync(KlientDTO klientDTO)
         {
             
             try
@@ -137,6 +137,12 @@ namespace GigaKino.Services
                 Console.WriteLine("RegisterKlientAsync failed:" + ex);
                 return null;
             }
+        }*/
+
+        public void AddKlient(Klient klient)
+        {
+            _context.Klienci.Add(klient);
+            _context.SaveChanges();
         }
     }
 }

@@ -1,3 +1,4 @@
+using GigaKino.Models;
 using GigaKino.ObjectsDTO;
 
 namespace GigaKino.ServicesInterfaces
@@ -9,6 +10,7 @@ namespace GigaKino.ServicesInterfaces
         Task<IEnumerable<KlientDTO>?> GetAllKlienciAsync();
         Task<KlientDTO?> UpdateKlientAsync(uint id, KlientDTO klientDTO);
         Task<bool?> DeleteKlientAsync(uint id);
-        Task<KlientDTO?> RegisterKlientAsync(KlientDTO klientDTO);
+        //Task<KlientDTO?> RegisterKlientAsync(KlientDTO klientDTO);
+        void AddKlient(Klient klient);
     }
 }

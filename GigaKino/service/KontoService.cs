@@ -4,6 +4,8 @@ using GigaKino.Models;
 using GigaKino.ObjectsDTO;
 using GigaKino.ServicesInterfaces;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace GigaKino.Services
 {
@@ -103,6 +105,35 @@ namespace GigaKino.Services
                 Console.WriteLine("DeleteKontoAsync failed:"+ ex);
                 return null;
             }
+        }
+
+        public string GenerateSalt()
+        {
+            var rng = new RNGCryptoServiceProvider();
+            var saltBytes = new byte[16];
+            rng.GetBytes(saltBytes);
+            return Convert.ToBase64String(saltBytes);
+        }
+
+        public string HashPassword(string password, string salt)
+        {
+            using (var sha256 = SHA256.Create())
+            {
+                var saltedPassword = password + salt;
+                var bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(saltedPassword));
+                return Convert.ToBase64String(bytes);
+            }
+        }
+
+        public void AddKonto(Konto konto)
+        {
+            _context.Konta.Add(konto);
+            _context.SaveChanges();
+        }
+
+        public bool UserExists(string login)
+        {
+            return _context.Konta.Any(k => k.Login == login);
         }
     }
 }

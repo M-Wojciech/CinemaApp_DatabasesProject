@@ -1,5 +1,8 @@
+using GigaKino.Models;
 using GigaKino.ObjectsDTO;
+using GigaKino.Services;
 using GigaKino.ServicesInterfaces;
+using GigaKino.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -10,10 +13,12 @@ namespace GigaKino.Controllers
     public class KlientController : Controller
     {
         private readonly IKlientService _klientService;
+        private readonly IKontoService _kontoService;
 
-        public KlientController(IKlientService klientService)
+        public KlientController(IKlientService klientService, IKontoService kontoService)
         {
             _klientService = klientService;
+            _kontoService = kontoService;
         }
 
         [HttpPost]
@@ -69,25 +74,55 @@ namespace GigaKino.Controllers
             return NoContent();
         }
 
-        [HttpGet("signup")]
+        /*[HttpGet("signup")]
         public IActionResult Signup()
+        {
+            return View();
+        }*/
+
+        [HttpGet("register")]
+        public IActionResult Register()
         {
             return View();
         }
 
         [HttpPost("register")]
-        public async Task<ActionResult<KlientDTO>> RegisterKlient(KlientDTO klientDTO)
+        [ValidateAntiForgeryToken]
+        public IActionResult Register([FromForm] RegistrationViewModel model)
         {
-            if (klientDTO == null || klientDTO.Konto == null || string.IsNullOrWhiteSpace(klientDTO.Konto.Haslo))
+            if (!ModelState.IsValid)
             {
-                return BadRequest("Invalid registration details");
+                return View(model);
             }
 
-            var registeredKlient = await _klientService.RegisterKlientAsync(klientDTO);
-            if (registeredKlient == null)
+            if (_kontoService.UserExists(model.Login))
             {
-                return BadRequest("Registration failed");
+                ModelState.AddModelError(string.Empty, "Login already registered.");
+                return View(model);
             }
+
+            var salt = _kontoService.GenerateSalt();
+            var hashedPassword = _kontoService.HashPassword(model.Password, salt);
+
+            var konto = new Konto
+            {
+                Typ = model.Typ,
+                Login = model.Login,
+                Haslo = hashedPassword,
+                Sol = salt
+            };
+
+            _kontoService.AddKonto(konto);
+
+            var klient = new Klient
+            {
+                Mail = model.Mail,
+                Imie = model.Imie,
+                Nazwisko = model.Nazwisko,
+                IdKonto = konto.IdKonto
+            };
+
+            _klientService.AddKlient(klient);
 
             return RedirectToAction("Index", "Home");
         }
