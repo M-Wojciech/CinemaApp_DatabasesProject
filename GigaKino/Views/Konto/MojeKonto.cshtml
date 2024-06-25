@@ -1,26 +1,51 @@
-﻿@model IEnumerable<GigaKino.ObjectsDTO.KontoDTO>
+﻿@model GigaKino.ViewModels.MyAccountViewModel
 @{
-    ViewData["Title"] = "MojeKOnto";
+    ViewData["Title"] = "MojeKonto";
 }
 <!DOCTYPE html>
 <html lang="pl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
-<body>
-    @if (Model != null && Model.Any())
-    {
-        foreach (var konto in Model)
-        {
-            <p>Id: @konto.IdKonto</p>
-            <p>login: @konto.Login</p>
-            <p>Hasło: @konto.Haslo</p>
-        }
-    }
-    else
-    {
-        <p>Brak dostępnych filmów.</p>
-    }
-</body>
+@section Head {
+    <style>
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Istok+Web&display=swap" rel="stylesheet">
+    <script src="~/js/function.js" defer></script>
+    <link rel="stylesheet" href="~/css/style.css">
+    <link rel="stylesheet" href="~/css/konto_style.css" />
+}
+<h1>Moje konto</h1>
+<!--<h2>Twoje bilety</h2>
+<section class="bilet">
+    <p>DIUNA: CZĘŚĆ DRUGA 2D, Sobota 13.04 19:30, Wroclavia</p>
+    <table>
+        <thead>
+            <tr>
+                <th>Rodzaj biletu</th>
+                <th>Ilość</th>
+                <th>Cena</th>
+                <th>Sala</th>
+                <th>Miejsce</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>ULGOWY</td>
+                <td>1</td>
+                <td>25.90 zł</td>
+                <td>3</td>
+                <td>Rząd 5, miejsce 4</td>
+            </tr>
+        </tbody>
+    </table>
+    <button>Zwróć bilet</button>
+</section>
+<section class="usun_konto">
+    <h2>Usunięcie konta</h2>
+    <button>Usuń konto</button>
+</section>-->
+    <div>
+        <p><strong>Email:</strong> @Model.Email</p>
+        <p><strong>Imię:</strong> @Model.Imie</p>
+        <p><strong>Nazwisko:</strong> @Model.Nazwisko</p>
+    </div>
 </html>

@@ -95,7 +95,7 @@ namespace GigaKino.Controllers
                 return View(model);
             }
 
-            if (_kontoService.UserExists(model.Login))
+            if (_kontoService.UserExists(model.Mail))
             {
                 ModelState.AddModelError(string.Empty, "Login already registered.");
                 return View(model);
@@ -106,8 +106,9 @@ namespace GigaKino.Controllers
 
             var konto = new Konto
             {
-                Typ = model.Typ,
-                Login = model.Login,
+                //Typ = model.Typ,
+                Typ = "klient",
+                Login = model.Mail,
                 Haslo = hashedPassword,
                 Sol = salt
             };

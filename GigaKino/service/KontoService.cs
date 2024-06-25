@@ -135,5 +135,10 @@ namespace GigaKino.Services
         {
             return _context.Konta.Any(k => k.Login == login);
         }
+
+        public Konto GetKontoById(uint? idKonto)
+        {
+            return _context.Konta.FirstOrDefault(k => k.IdKonto == idKonto);
+        }
     }
 }

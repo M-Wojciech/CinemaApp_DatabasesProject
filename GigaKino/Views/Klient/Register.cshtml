@@ -9,6 +9,14 @@
     <title>GigaKino_Signup</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="~/css/signup_style.css">
+    <style>
+        .input-field input {
+            padding: 10px;
+            border: 1px solid #0D0D0D;
+            border-radius: 12px;
+            font-size: 14px;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -33,7 +41,7 @@
                     <label asp-for="Mail"></label>
                     <input asp-for="Mail" type="email" />
                 </div>
-                <div class="input-group-horizontal">
+                <!--<div class="input-group-horizontal">
                     <div class="input-group">
                         <label asp-for="Typ"></label>
                         <input asp-for="Typ" />
@@ -42,7 +50,7 @@
                         <label asp-for="Login"></label>
                         <input asp-for="Login" />
                     </div>
-                </div>
+                </div>-->
                 <!--<div class="input-group-horizontal">
                     <div class="input-field">
                         <label asp-for="Password"></label>

@@ -12,5 +12,6 @@ namespace GigaKino.ServicesInterfaces
         Task<bool?> DeleteKlientAsync(uint id);
         //Task<KlientDTO?> RegisterKlientAsync(KlientDTO klientDTO);
         void AddKlient(Klient klient);
+        Klient GetKlientByEmail(string email);
     }
 }

@@ -16,20 +16,38 @@
                 <h1>GigaKino</h1>
             </div>
             <div class="dropdown">
-                <button onclick="myFunction()" class="dropbtn">
-                    <img src="~/img/Icons.png" alt="Icon">
-                    KONTO
-                </button>
-                <div id="myDropdown" class="dropdown-content">
-                    <a asp-controller="Konto" asp-action="Login">
-                        <img src="~/img/Icons2.png" alt="Icon">
-                        Logowanie
-                    </a>
-                    <a asp-controller="Klient" asp-action="Register">
-                        <img src="~/img/edit.png" alt="Icon">
-                        Rejestracja
-                    </a>
-                </div>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <button onclick="myFunction()" class="dropbtn">
+                        <img src="~/img/Icons.png" alt="Icon">
+                        Użytkownik
+                    </button>
+                    <div id="myDropdown" class="dropdown-content">
+                        <a asp-controller="Konto" asp-action="MojeKonto">
+                            Moje konto
+                        </a>
+                        <a asp-controller="Konto" asp-action="Logout">
+                            Wyloguj
+                        </a>
+                    </div>
+                }
+                else
+                {
+                    <button onclick="myFunction()" class="dropbtn">
+                        <img src="~/img/Icons.png" alt="Icon">
+                        KONTO
+                    </button>
+                    <div id="myDropdown" class="dropdown-content">
+                        <a asp-controller="Konto" asp-action="Login">
+                            <img src="~/img/Icons2.png" alt="Icon">
+                            Logowanie
+                        </a>
+                        <a asp-controller="Klient" asp-action="Register">
+                            <img src="~/img/edit.png" alt="Icon">
+                            Rejestracja
+                        </a>
+                    </div>
+                }
             </div>
         </div>
         <ul>

@@ -4,13 +4,13 @@ namespace GigaKino.ViewModels
 {
     public class RegistrationViewModel
     {
-        [Required]
+        /*[Required]
         [StringLength(20)]
         public string Typ { get; set; }
 
         [Required]
         [StringLength(30)]
-        public string Login { get; set; }
+        public string Login { get; set; }*/
 
         [Required]
         [StringLength(64, MinimumLength = 8)]

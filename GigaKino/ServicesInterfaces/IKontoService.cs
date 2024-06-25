@@ -14,5 +14,6 @@ namespace GigaKino.ServicesInterfaces
         string HashPassword(string password, string salt);
         void AddKonto(Konto konto);
         bool UserExists(string login);
+        Konto GetKontoById(uint? idKonto);
     }
 }

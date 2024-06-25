@@ -8,10 +8,19 @@ using GigaKino.ServicesInterfaces;
 using GigaKino;
 using System.Runtime.InteropServices;
 using System.Configuration;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
 System.Environment.SetEnvironmentVariable("WEBSITE_LOAD_USER_PROFILE", "1", EnvironmentVariableTarget.Process);
+
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/Konto/Login";
+        options.LogoutPath = "/Konto/Logout";
+    });
+builder.Services.AddAuthorization();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -43,6 +52,8 @@ if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
 }
 
 builder.Services.AddDbContext<KinoContext>(options => options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+
+builder.Services.AddControllersWithViews();
 
 
 var app = builder.Build();
@@ -79,6 +90,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
