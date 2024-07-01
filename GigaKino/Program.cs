@@ -97,5 +97,9 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
+app.MapControllerRoute(
+    name: "sala",
+    pattern: "{controller=Sala}/{action=Sala}/{idSeans}/{quantity}");
+
 Console.WriteLine("running the app...");
 app.Run();

@@ -2,6 +2,7 @@
 @model IEnumerable<GigaKino.ObjectsDTO.RepertuarItemDTO>
 @{
     ViewData["Title"] = "Repertuar";
+    var isAuthenticated = User.Identity.IsAuthenticated;
 }
 @section Head{
     <meta name="viewport" content="width=device-width" />
@@ -41,9 +42,165 @@
                 });
             });
         });
-    </script>
-}
 
+        document.addEventListener('DOMContentLoaded', function () {
+            const modal = document.getElementById('authModal');
+            const span = document.getElementsByClassName('close')[0];
+
+            const loginButton = document.getElementById('loginButton');
+            const registerButton = document.getElementById('registerButton');
+            const continueLink = document.getElementById('continueLink');
+
+            const sessionLinks = document.querySelectorAll('.session-link');
+
+            sessionLinks.forEach(link => {
+                link.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    const isAuthenticated = @Json.Serialize(User.Identity.IsAuthenticated);
+                    const seansUrl = this.href;
+
+                    if (!isAuthenticated) {
+                        modal.style.display = 'block';
+
+                        loginButton.onclick = function () {
+                            window.location.href = '/api/Konto/Login';
+                        };
+                        registerButton.onclick = function () {
+                            window.location.href = '/api/Klient/Register';
+                        };
+                        continueLink.href = seansUrl; // Set href of the continue link to the session URL
+                    } else {
+                        window.location.href = seansUrl;
+                    }
+                });
+            });
+
+            span.onclick = function () {
+                modal.style.display = 'none';
+            };
+
+            window.onclick = function (event) {
+                if (event.target == modal) {
+                    modal.style.display = 'none';
+                }
+            };
+        });
+    </script>
+    <style>
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0,0,0);
+            background-color: rgba(0,0,0,0.4);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            border-radius: 24px;
+            color: #0D0D0D;
+            max-width: 500px; /* Limit the width */
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            border-radius: 10px; /* Rounded corners */
+            text-align: center; /* Center text */
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+            .close:hover,
+            .close:focus {
+                color: black;
+                text-decoration: none;
+                cursor: pointer;
+            }
+
+        /*.modal-content button {
+            background-color: #A63740;
+            color: white;
+            border: none;
+            border-radius: 32px;
+            transition: background-color 0.3s;
+            width: 200px;
+            height: 50px;
+        }*/
+
+        .modal-buttons {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px; /* Space between buttons */
+            margin-top: 20px;
+        }
+
+        #loginButton {
+            background-color: #A63740;
+            color: white;
+            border: none;
+            border-radius: 32px;
+            transition: background-color 0.3s;
+            width: 200px;
+            height: 50px;
+        }
+
+        #registerButton {
+            background-color: white;
+            color: #A63740;
+            border: 2px solid #A63740; /* Белая граница */
+            border-radius: 32px; /* Скругленные углы */
+            transition: background-color 0.3s;
+            width: 200px;
+            height: 50px;
+        }
+
+        /*.modal-content button:hover {
+                background-color: #BF5669;
+        }*/
+
+        #loginButton:hover {
+            background-color: #BF5669;
+        }
+
+        #registerButton:hover {
+            font-weight: bold;
+        }
+
+        .continue-link {
+            text-decoration: none;
+            color: #A63740;
+            transition: color 0.3s;
+        }
+
+            .continue-link:hover {
+                text-decoration: underline;
+                color: #BF5669;
+            }
+    </style>
+}
+<div id="authModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <div class="modal-buttons">
+            <button id="loginButton">Zaloguj się</button>
+            <button id="registerButton">Załórz konto</button>
+            <p>lub</p>
+            <a id="continueLink" href="#" class="continue-link">Kup jako gość</a>
+        </div>
+    </div>
+</div>
     <section class="location">
         <img src="~/img/map.png" alt="Icon">
         <select name="lokalizacja" id="lokalizacja-select">
@@ -99,9 +256,14 @@
                             {
                                 @foreach (var screening in lang.ListaSeansow)
                                 {
-                                    <a asp-area="" asp-controller="Seans" asp-action="Index" asp-route-idSeans="@screening.IdSeans">
+                                    <!--<a asp-area="" asp-controller="Seans" asp-action="Index" asp-route-idSeans="@screening.IdSeans">
                                         <button data-termin="@screening.Termin.ToString("yyyy-MM-dd")">
                                             @screening.Termin.ToString("HH:mm")<br />@Technology.Wersja, @lang.Wersja
+                                        </button>
+                                    </a>-->
+                                    <a href="@Url.Action("Index", "Seans", new { idSeans = screening.IdSeans })" class="session-link">
+                                        <button data-termin="@screening.Termin.ToString("yyyy-MM-dd")">
+                                            @screening.IdSeans<br />@screening.Termin.ToString("HH:mm")<br />@Technology.Wersja, @lang.Wersja
                                         </button>
                                     </a>
                                 }

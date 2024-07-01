@@ -9,5 +9,6 @@ namespace GigaKino.ServicesInterfaces
         Task<IEnumerable<MiejsceDTO>?> GetAllMiejscaAsync();
         Task<MiejsceDTO?> UpdateMiejsceAsync(uint id, MiejsceDTO miejsceDTO);
         Task<bool?> DeleteMiejsceAsync(uint id);
+        Task<IEnumerable<MiejsceDTO>> GetMiejscaBySalaIdAsync(uint idSala);
     }
 }

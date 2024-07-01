@@ -104,5 +104,100 @@ namespace GigaKino.Services
                 return null;
             }
         }
+
+        public async Task<IEnumerable<BiletDTO>> GetBiletBySeansIdAsync(uint idSeans)
+        {
+            return await _context.Bilety
+                .Where(b => b.IdSeans == idSeans)
+                .Include(b => b.Seans)
+                    .ThenInclude(s => s.Film)
+                .Include(b => b.Seans)
+                    .ThenInclude(s => s.Sala)
+                        .ThenInclude(s => s.Kino)
+                .Include(b => b.Miejsce)
+                .Include(b => b.Transakcja)
+                    .ThenInclude(t => t.Klient)
+                        .ThenInclude(k => k.Konto)
+                .Select(b => new BiletDTO
+                {
+                    IdBilet = b.IdBilet,
+                    CenaFaktyczna = b.Cena_Faktyczna,
+                    Ulga = b.Ulga,
+                    IdSeans = b.IdSeans,
+                    IdMiejsce = b.IdMiejsce,
+                    IdTransakcja = b.IdTransakcja,
+                    Seans = new SeansDTO
+                    {
+                        IdSeans = b.Seans.IdSeans,
+                        Termin = b.Seans.Termin,
+                        Technologia = b.Seans.Technologia,
+                        WersjaJezykowa = b.Seans.Wersja_Jezykowa,
+                        CenaDomyslna = b.Seans.Cena_Domyslna,
+                        IdFilm = b.Seans.IdFilm,
+                        IdSala = b.Seans.IdSala,
+                        Film = new FilmDTO
+                        {
+                            IdFilm = b.Seans.Film.IdFilm,
+                            Tytul = b.Seans.Film.Tytul,
+                            Dlugosc = b.Seans.Film.Dlugosc,
+                            Gatunek = b.Seans.Film.Gatunek,
+                            Rezyser = b.Seans.Film.Rezyser,
+                            Ogr_wiekowe = b.Seans.Film.Ogr_wiekowe,
+                            Trailer = b.Seans.Film.Trailer,
+                            Opis = b.Seans.Film.Opis,
+                            BannerPath = b.Seans.Film.BannerPath,
+                            PosterPath = b.Seans.Film.PosterPath
+                        },
+                        Sala = new SalaDTO
+                        {
+                            IdSala = b.Seans.Sala.IdSala,
+                            Numer = b.Seans.Sala.Numer,
+                            IdKino = b.Seans.Sala.IdKino,
+                            Kino = new KinoDTO
+                            {
+                                IdKino = b.Seans.Sala.Kino.IdKino,
+                                Nazwa = b.Seans.Sala.Kino.Nazwa,
+                                Miasto = b.Seans.Sala.Kino.Miasto,
+                                Ulica = b.Seans.Sala.Kino.Ulica,
+                                NumerBudynku = b.Seans.Sala.Kino.Numer_Budynku
+                            }
+                        }
+                    },
+                    Miejsce = new MiejsceDTO
+                    {
+                        IdMiejsce = b.Miejsce.IdMiejsce,
+                        Rzad = b.Miejsce.Rzad,
+                        Kolumna = b.Miejsce.Kolumna,
+                        IdSala = b.Miejsce.IdSala
+                    },
+                    Transakcja = new TransakcjaDTO
+                    {
+                        IdTransakcja = b.Transakcja.IdTransakcja,
+                        CenaLaczna = b.Transakcja.Cena_Laczna,
+                        CzasRozpoczecia = b.Transakcja.Czas_Rozpoczecia,
+                        CzasZakupu = b.Transakcja.Czas_Zakupu,
+                        Status = b.Transakcja.Status,
+                        IdKlient = b.Transakcja.IdKlient,
+                        Klient = new KlientDTO
+                        {
+                            IdKlient = b.Transakcja.Klient.IdKlient,
+                            Mail = b.Transakcja.Klient.Mail,
+                            Imie = b.Transakcja.Klient.Imie,
+                            Nazwisko = b.Transakcja.Klient.Nazwisko,
+                            IdKonto = b.Transakcja.Klient.IdKonto,
+                            Konto = b.Transakcja.Klient.Konto != null ? new KontoDTO
+                            {
+                                IdKonto = b.Transakcja.Klient.Konto.IdKonto,
+                                Typ = b.Transakcja.Klient.Konto.Typ,
+                                Login = b.Transakcja.Klient.Konto.Login,
+                                Haslo = b.Transakcja.Klient.Konto.Haslo,
+                                Sol = b.Transakcja.Klient.Konto.Sol
+                            } : null
+                        }
+                    }
+
+                })
+                .ToListAsync();
+        }
     }
 }

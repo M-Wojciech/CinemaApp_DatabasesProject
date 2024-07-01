@@ -1,6 +1,8 @@
+using GigaKino.Models;
 using GigaKino.ObjectsDTO;
 using GigaKino.Services;
 using GigaKino.ServicesInterfaces;
+using GigaKino.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -14,13 +16,17 @@ namespace GigaKino.Controllers
         private readonly IFilmService _filmService;
         private readonly ISalaService _salaService;
         private readonly IKinoService _kinoService;
+        private readonly IMiejsceService _miejsceService;
+        private readonly IBiletService _biletService;
 
-        public SeansController(ISeansService seansService, IFilmService filmService, ISalaService salaService, IKinoService kinoService)
+        public SeansController(ISeansService seansService, IFilmService filmService, ISalaService salaService, IKinoService kinoService, IMiejsceService miejsceService, IBiletService biletService)
         {
             _seansService = seansService;
             _filmService = filmService;
             _salaService = salaService;
             _kinoService = kinoService;
+            _miejsceService = miejsceService;
+            _biletService = biletService;
         }
 
         [HttpPost]
@@ -115,7 +121,39 @@ namespace GigaKino.Controllers
             if (kino == null)
                 return NotFound();
 
-            var model = new Tuple<SeansDTO, FilmDTO, SalaDTO, KinoDTO>(seans, film, sala, kino);//, KinoDTO>(seans, film, sala, kino);
+            var miejsca = await _miejsceService.GetMiejscaBySalaIdAsync(sala.IdSala);
+            if (miejsca == null || !miejsca.Any())
+            {
+                return NotFound();
+            }
+
+            var bilety = await _biletService.GetBiletBySeansIdAsync(idSeans);
+            if (bilety == null)
+            {
+                bilety = new List<BiletDTO>();
+            }
+
+            // Получить ID всех занятых мест
+            var occupiedMiejsceIds = bilety.Select(b => b.IdMiejsce).ToHashSet();
+
+            // Фильтровать свободные места
+            var freeMiejsca = miejsca.Where(m => !occupiedMiejsceIds.Contains(m.IdMiejsce)).ToList();
+
+            // Подсчитать количество свободных мест
+            int freeMiejscaCount = freeMiejsca.Count;
+
+            var model = new SeansViewModel
+            {
+                Seans = seans,
+                Film = film,
+                Sala = sala,
+                Kino = kino,
+                Miejsca = freeMiejsca,
+                Bilet = bilety,
+                FreeMiejscaCount = freeMiejscaCount
+            };
+
+            //var model = new Tuple<SeansDTO, FilmDTO, SalaDTO, KinoDTO, MiejsceDTO>(seans, film, sala, kino, (MiejsceDTO)miejsca);//, KinoDTO>(seans, film, sala, kino);
 
             return View(model);
         }

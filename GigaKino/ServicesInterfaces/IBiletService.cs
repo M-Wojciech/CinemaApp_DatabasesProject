@@ -9,5 +9,6 @@ namespace GigaKino.ServicesInterfaces
         Task<IEnumerable<BiletDTO>?> GetAllBiletyAsync();
         Task<BiletDTO?> UpdateBiletAsync(uint id, BiletDTO biletDTO);
         Task<bool?> DeleteBiletAsync(uint id);
+        Task<IEnumerable<BiletDTO>> GetBiletBySeansIdAsync(uint idSeans);
     }
 }

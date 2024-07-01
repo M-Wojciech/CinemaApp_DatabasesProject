@@ -103,5 +103,19 @@ namespace GigaKino.Services
                 return null;
             }
         }
+
+        public async Task<IEnumerable<MiejsceDTO>> GetMiejscaBySalaIdAsync(uint idSala)
+        {
+            return await _context.Miejsca
+                .Where(m => m.IdSala == idSala)
+                .Select(m => new MiejsceDTO
+                {
+                    IdMiejsce = m.IdMiejsce,
+                    Rzad = m.Rzad,
+                    Kolumna = m.Kolumna,
+                    IdSala = m.IdSala
+                })
+                .ToListAsync();
+        }
     }
 }

@@ -1,5 +1,7 @@
 using GigaKino.ObjectsDTO;
+using GigaKino.Services;
 using GigaKino.ServicesInterfaces;
+using GigaKino.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -7,13 +9,19 @@ namespace GigaKino.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class SalaController : ControllerBase
+    public class SalaController : Controller
     {
         private readonly ISalaService _salaService;
+        private readonly IMiejsceService _miejsceService;
+        private readonly IBiletService _biletService;
+        private readonly ISeansService _seansService;
 
-        public SalaController(ISalaService salaService)
+        public SalaController(ISalaService salaService, ISeansService seansService, IMiejsceService miejsceService, IBiletService biletService)
         {
             _salaService = salaService;
+            _seansService = seansService;
+            _biletService = biletService;
+            _miejsceService = miejsceService;
         }
 
         [HttpPost]
@@ -67,6 +75,30 @@ namespace GigaKino.Controllers
             }
 
             return NoContent();
+        }
+
+        [HttpGet("Sala")]
+        public async Task<IActionResult> Sala(uint idSeans, int quantity)
+        {
+            var seans = await _seansService.GetSeansByIdAsync(idSeans);
+            if (seans == null) return NotFound();
+
+            var miejsca = await _miejsceService.GetMiejscaBySalaIdAsync(seans.IdSala);
+            if (miejsca == null || !miejsca.Any()) return NotFound();
+
+            var bilety = await _biletService.GetBiletBySeansIdAsync(idSeans);
+
+            var zajeteMiejsca = bilety.Select(b => b.IdMiejsce).ToHashSet();
+
+            var model = new SalaViewModel
+            {
+                Seans = seans,
+                Miejsca = miejsca,
+                ZajeteMiejsca = zajeteMiejsca,
+                Quantity = quantity
+            };
+
+            return View(model);
         }
     }
 }

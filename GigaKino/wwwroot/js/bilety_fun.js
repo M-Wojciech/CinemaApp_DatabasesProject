@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const increaseBtn = document.getElementById('increase');
     const quantityInput = document.getElementById('quantity');
     const nextBtn = document.getElementById('nextBtn');
+    const freeSeatsCount = parseInt(document.getElementById('freeSeatsCount').value);
 
     // Обработчик нажатия на кнопку уменьшения
     decreaseBtn.addEventListener('click', () => {
@@ -16,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Обработчик нажатия на кнопку увеличения
     increaseBtn.addEventListener('click', () => {
         let currentValue = parseInt(quantityInput.value);
-        if (!isNaN(currentValue) && currentValue < 100) {
+        if (!isNaN(currentValue) && currentValue < freeSeatsCount) {
             quantityInput.value = currentValue + 1;
         }
     });
@@ -26,8 +27,8 @@ document.addEventListener('DOMContentLoaded', () => {
         let value = parseInt(quantityInput.value);
         if (isNaN(value) || value < 0) {
             quantityInput.value = 0;
-        } else if (value > 100) {
-            quantityInput.value = 100;
+        } else if (value > freeSeatsCount) {
+            quantityInput.value = freeSeatsCount;
         }
     });
 

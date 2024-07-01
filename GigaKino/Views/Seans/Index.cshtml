@@ -1,5 +1,5 @@
 ﻿@using GigaKino.ObjectsDTO
-@model Tuple<SeansDTO, FilmDTO, SalaDTO, KinoDTO>
+@model GigaKino.ViewModels.SeansViewModel
 @{
     ViewData["Title"] = "Index";
     Layout = null;
@@ -12,7 +12,53 @@
     <link href="https://fonts.googleapis.com/css2?family=Istok+Web&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="~/css/bilety_style.css">
-    <script src="~/js/bilety_fun.js" defer></script>
+    <!--<script src="~/js/bilety_fun.js" defer></script>-->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Найдем элементы по id
+            const decreaseBtn = document.getElementById('decrease');
+            const increaseBtn = document.getElementById('increase');
+            const quantityInput = document.getElementById('quantity');
+            const nextBtn = document.getElementById('nextBtn');
+            const freeSeatsCount = parseInt(document.getElementById('freeSeatsCount').value);
+
+            // Обработчик нажатия на кнопку уменьшения
+            decreaseBtn.addEventListener('click', () => {
+                let currentValue = parseInt(quantityInput.value);
+                if (!isNaN(currentValue) && currentValue > 0) {
+                    quantityInput.value = currentValue - 1;
+                }
+            });
+
+            // Обработчик нажатия на кнопку увеличения
+            increaseBtn.addEventListener('click', () => {
+                let currentValue = parseInt(quantityInput.value);
+                if (!isNaN(currentValue) && currentValue < freeSeatsCount) {
+                    quantityInput.value = currentValue + 1;
+                }
+            });
+
+            // Проверка значения ввода на изменение
+            quantityInput.addEventListener('input', () => {
+                let value = parseInt(quantityInput.value);
+                if (isNaN(value) || value < 0) {
+                    quantityInput.value = 0;
+                } else if (value > freeSeatsCount) {
+                    quantityInput.value = freeSeatsCount;
+                }
+            });
+
+            nextBtn.addEventListener('click', () => {
+                let currentValue = parseInt(quantityInput.value);
+                if (currentValue > 0) {
+                    // Замените 'your-next-page.html' на URL вашей следующей страницы
+                    window.location.href =`/api/Sala/Sala?idSeans=@Model.Seans.IdSeans&quantity=${currentValue}`;
+                } else {
+                    alert('Nie wybrano ilości biletów.');
+                }
+            });
+        });
+    </script>
 </head>
 <body>
     <header>
@@ -28,14 +74,77 @@
     </header>
     <main class="outer-container">
 <div class="movie-details">
-    <img src="@Model.Item2.PosterPath" alt="Movie Poster" class="poster">
+    <img src="@Model.Film.PosterPath" alt="Movie Poster" class="poster">
     <div class="details">
-        <h2>@Model.Item2.Tytul</h2>
-        <p class="opis">@Model.Item2.Gatunek | od @Model.Item2.Ogr_wiekowe lat | @Model.Item2.Dlugosc min</p>
-        <p class="opis">@Model.Item1.Termin.ToString("dddd dd.MM.yyyy")<br>@Model.Item4.Nazwa, Sala @Model.Item3.Numer</p>
-        <p class="seans">@Model.Item1.Termin.ToString("HH:mm"), @Model.Item1.Technologia, @Model.Item1.WersjaJezykowa</p>
+        <h2>@Model.Film.Tytul</h2>
+        <p class="opis">@Model.Film.Gatunek | od @Model.Film.Ogr_wiekowe lat | @Model.Film.Dlugosc min</p>
+        <p class="opis">@Model.Seans.Termin.ToString("dddd dd.MM.yyyy")<br>@Model.Kino.Nazwa, Sala @Model.Sala.Numer</p>
+        <p class="seans">@Model.Seans.Termin.ToString("HH:mm"), @Model.Seans.Technologia, @Model.Seans.WersjaJezykowa</p>
     </div>
 </div>
+        <!--<h2>Available Seats</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Rząd</th>
+                    <th>Kolumna</th>
+                    <th>idMiejsca</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var miejsce in Model.Miejsca)
+                {
+                    <tr>
+                        <td>@miejsce.Rzad</td>
+                        <td>@miejsce.Kolumna</td>
+                        <td>@miejsce.IdMiejsce</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <h2>Bilety</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>idBilet</th>
+                    <th>idMiejsca</th>
+                    <th>idSeans</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var bilet in Model.Bilet)
+                {
+                    <tr>
+                        <td>@bilet.IdBilet</td>
+                        <td>@bilet.IdMiejsce</td>
+                        <td>@bilet.IdSeans</td>
+                    </tr>
+                }
+            </tbody>
+        </table>-->
+        <h2>Wolne miejsca</h2>
+        <p><strong>Całkowita liczba wolnych miejsc:</strong> @Model.FreeMiejscaCount</p>
+        <input type="hidden" id="freeSeatsCount" value="@Model.FreeMiejscaCount" />
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Rząd</th>
+                    <th>Kolumna</th>
+                    <th>idMiejsca</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var miejsce in Model.Miejsca)
+                {
+                    <tr>
+                        <td>@miejsce.Rzad</td>
+                        <td>@miejsce.Kolumna</td>
+                        <td>@miejsce.IdMiejsce</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
 <div class="tickets">
     <h2>Wybierz bilet</h2>
     <div class="ticket-selector">
@@ -50,7 +159,7 @@
             <tbody>
                 <tr>
                     <td><strong>NORMALNY</strong></td>
-                    <td>@Model.Item1.CenaDomyslna zł</td>
+                    <td>@Model.Seans.CenaDomyslna zł</td>
                     <!--<td>29.90 zł</td>-->
                     <td>
                         <button class="quantity-btn" id="decrease">-</button>
