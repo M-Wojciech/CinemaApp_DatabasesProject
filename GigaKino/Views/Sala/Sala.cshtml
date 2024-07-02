@@ -15,8 +15,6 @@
         document.addEventListener('DOMContentLoaded', () => {
             const maxSeats = @Model.Quantity;
             const selectedSeats = new Set();
-            const nextBtn = document.getElementById('nextBtn');
-            const selectedSeatsInput = document.getElementById('selectedSeats');
 
             document.querySelectorAll('.miejsce.wolne').forEach(button => {
                 button.addEventListener('click', function () {
@@ -36,22 +34,15 @@
                             btn.disabled = selectedSeats.size >= maxSeats;
                         }
                     });
-                    // Обновить скрытое поле для отправки на следующую страницу
-                    selectedSeatsInput.value = Array.from(selectedSeats).join(',');
                 });
             });
 
-            /*document.getElementById('submitSelection').addEventListener('click', () => {
+            document.getElementById('submitSelection').addEventListener('click', () => {
                 if (selectedSeats.size === maxSeats) {
-                    alert('Выбрано мест: ' + Array.from(selectedSeats).join(', '));
-                } else {
-                    alert('Wybierz odpowiednią liczbę miejsc.');
-                }
-            });*/
-            nextBtn.addEventListener('click', () => {
-                if (selectedSeats.size === maxSeats) {
-                    // Отправить форму на следующую страницу
-                    document.getElementById('selectionForm').submit();
+                    // Перенаправление на страницу оплаты с выбранными местами
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const idSeans = urlParams.get('idSeans');
+                    window.location.href = `/api/Transakcja/Checkout?idSeans=${idSeans}&selectedSeats=${Array.from(selectedSeats).join(',')}`;
                 } else {
                     alert('Wybierz odpowiednią liczbę miejsc.');
                 }
@@ -141,13 +132,10 @@
                 </div>
         }
         </div>
-        <form id="selectionForm" action="/Transakcja/Confirm" method="post">
-            <input type="hidden" id="selectedSeats" name="selectedSeats" value="">
             <div class="buttons">
-                <button onclick="history.back()" class="back-btn" type="button">Wstecz</button>
-                <button class="next-btn" id="nextBtn" type="button">Dalej</button>
+                <button onclick="history.back()" class="back-btn">Wstecz</button>
+                <button class="next-btn" id="submitSelection">Dalej</button>
             </div>
-        </form>
     </main>
 </body>
 </html>

@@ -1,0 +1,90 @@
+﻿@model GigaKino.ViewModels.CheckoutViewModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>GigaKino_paying</title>
+    <link href="https://fonts.googleapis.com/css2?family=Istok+Web&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/paying_style.css">
+    <script src="~/js/paying_fun.js" defer></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="text-container">
+                <h1>GigaKino</h1>
+            </div>
+        </div>
+        <ul>
+            <li><a>Filmy</a></li>
+            <li><a class="active">Repertuar</a></li>
+        </ul>
+    </header>
+    <main>
+<h2>Potwierdzenie zamówienia</h2>
+
+<h3>Szczegóły seansu</h3>
+<p><strong>Film:</strong> @Model.Seans.Film.Tytul</p>
+<p><strong>Technologia:</strong> @Model.Seans.Technologia</p>
+<p><strong>Data i godzina:</strong> @Model.Seans.Termin</p>
+<p><strong>Kino:</strong> @Model.Seans.Sala.Kino.Nazwa</p>
+
+<h3>Wybrane miejsca</h3>
+<table>
+    <thead>
+        <tr>
+            <th>Cena biletu</th>
+            <th>Numer sali</th>
+            <th>Rząd</th>
+            <th>Kolumna</th>
+            <th>Id miejsca</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var miejsce in Model.WybraneMiejsca)
+        {
+            <tr>
+                <td>@Model.Seans.CenaDomyslna zł</td>
+                <td>@Model.Seans.Sala.Numer</td>
+                <td>@miejsce.Rzad</td>
+                <td>@miejsce.Kolumna</td>
+                <td>@miejsce.IdMiejsce</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<h3>Łączna kwota: @Model.CenaLaczna zł</h3>
+
+<h3>Dane klienta</h3>
+<form asp-action="Checkout" method="post">
+    <input type="hidden" name="IdSeans" value="@Model.Seans.IdSeans" />
+    <input type="hidden" name="CenaDomyslna" value="@Model.Seans.CenaDomyslna" />
+    <input type="hidden" name="CenaLaczna" value="@Model.CenaLaczna" />
+    @foreach (var miejsce in Model.WybraneMiejsca)
+    {
+        <input type="hidden" name="SelectedSeats" value="@miejsce.IdMiejsce" />
+    }
+
+    <div>
+        <label for="Mail">Email</label>
+        <input type="email" id="Mail" name="Mail" required />
+    </div>
+    <div>
+        <label for="Imie">Imię</label>
+        <input type="text" id="Imie" name="Imie" required />
+    </div>
+    <div>
+        <label for="Nazwisko">Nazwisko</label>
+        <input type="text" id="Nazwisko" name="Nazwisko" required />
+    </div>
+
+    <button type="submit">Potwierdź</button>
+</form>
+    </main>
+</body>
+</html>

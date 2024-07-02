@@ -38,7 +38,8 @@ namespace GigaKino.Services
         {
             try
             {
-                var film = await _context.Filmy.FindAsync(id);
+                var film = await _context.Filmy
+                    .FirstOrDefaultAsync(f => f.IdFilm == id);
                 return _mapper.Map<FilmDTO>(film);
             }
             catch (Exception ex)

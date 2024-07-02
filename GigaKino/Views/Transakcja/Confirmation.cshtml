@@ -1,0 +1,12 @@
+﻿@model GigaKino.ObjectsDTO.TransakcjaDTO
+@{
+    Layout = null;
+}
+<h2>Potwierdzenie zakupu</h2>
+
+<p><strong>Transakcja ID:</strong> @Model.IdTransakcja</p>
+<p><strong>Łączna kwota:</strong> @Model.CenaLaczna zł</p>
+<p><strong>Data zakupu:</strong> @Model.CzasZakupu</p>
+<p><strong>Email:</strong> @Model.Klient.Mail</p>
+<p><strong>Imię:</strong> @Model.Klient.Imie</p>
+<p><strong>Nazwisko:</strong> @Model.Klient.Nazwisko</p>

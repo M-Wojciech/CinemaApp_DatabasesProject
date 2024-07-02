@@ -38,7 +38,11 @@ namespace GigaKino.Services
         {
             try
             {
-                var seans = await _context.Seanse.FindAsync(id);
+                var seans = await _context.Seanse
+                    .Include(s => s.Film)
+                    .Include(s => s.Sala)
+                        .ThenInclude(s => s.Kino) 
+                    .FirstOrDefaultAsync(s => s.IdSeans == id);
                 return _mapper.Map<SeansDTO>(seans);
             }
             catch (Exception ex)

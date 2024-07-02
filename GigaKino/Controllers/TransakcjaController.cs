@@ -17,8 +17,9 @@ namespace GigaKino.Controllers
         private readonly IFilmService _filmService;
         private readonly IKinoService _kinoService;
         private readonly IMiejsceService _miejsceService;
+        private readonly IBiletService _biletService;
 
-        public TransakcjaController(ITransakcjaService transakcjaService, ISeansService seansService, ISalaService salaService, IFilmService filmService, IKinoService kinoService, IMiejsceService miejsceService)
+        public TransakcjaController(ITransakcjaService transakcjaService, ISeansService seansService, ISalaService salaService, IFilmService filmService, IKinoService kinoService, IMiejsceService miejsceService, IBiletService biletService)
         {
             _transakcjaService = transakcjaService;
             _seansService = seansService;
@@ -26,6 +27,7 @@ namespace GigaKino.Controllers
             _filmService = filmService;
             _kinoService = kinoService;
             _miejsceService = miejsceService;
+            _biletService = biletService;
         }
 
         [HttpPost]
@@ -87,27 +89,92 @@ namespace GigaKino.Controllers
             return View();
         }*/
 
-        /*[HttpPost("Confirm")]
-        public async Task<IActionResult> Confirm(string selectedSeats, uint idSeans)
+        [HttpGet("Checkout")]
+        public async Task<IActionResult> Checkout(uint idSeans, string selectedSeats)
         {
             var seans = await _seansService.GetSeansByIdAsync(idSeans);
-            var film = await _filmService.GetFilmByIdAsync(seans.IdFilm);
-            var sala = await _salaService.GetSalaByIdAsync(seans.IdSala);
-            var kino = await _kinoService.GetKinoByIdAsync(sala.IdKino);
-            var selectedSeatsIds = selectedSeats.Split(',').Select(uint.Parse).ToList();
+            if (seans == null) return NotFound();
 
-            var miejsca = await _miejsceService.GetMiejsceByIdAsync(selectedSeatsIds);
+            var selectedMiejsca = selectedSeats.Split(',').Select(id => uint.Parse(id)).ToList();
+            var miejsca = new List<MiejsceDTO>();
+            foreach (var id in selectedMiejsca)
+            {
+                var miejsce = await _miejsceService.GetMiejsceByIdAsync(id);
+                if (miejsce != null) miejsca.Add(miejsce);
+            }
 
-            var model = new ConfirmPurchaseViewModel
+            var model = new CheckoutViewModel
             {
                 Seans = seans,
-                Film = film,
-                Sala = sala,
-                Kino = kino,
-                WybraneMiejsca = miejsca
+                WybraneMiejsca = miejsca,
+                CenaLaczna = miejsca.Count * seans.CenaDomyslna // например, вычисление цены
             };
 
             return View(model);
-        }*/
+        }
+
+        [HttpPost("Checkout")]
+        public async Task<IActionResult> Checkout([FromForm] CheckoutFormModel formModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                // Handle invalid model
+                return BadRequest(ModelState);
+            }
+
+            // Создайте или получите клиента
+            var klient = new KlientDTO
+            {
+                Mail = formModel.Mail,
+                Imie = formModel.Imie,
+                Nazwisko = formModel.Nazwisko
+            };
+            var transakcja = new TransakcjaDTO
+            {
+                CenaLaczna = formModel.CenaLaczna,
+                CzasRozpoczecia = DateTime.Now,
+                Status = false, // Pending
+                Klient = new KlientDTO
+                {
+                    Mail = formModel.Mail,
+                    Imie = formModel.Imie,
+                    Nazwisko = formModel.Nazwisko
+                }
+            };
+
+            var createdTransakcja = await _transakcjaService.CreateTransakcjaAsync(transakcja);
+
+            foreach (var idMiejsce in formModel.SelectedSeats)
+            {
+                var biletDTO = new BiletDTO
+                {
+                    CenaFaktyczna = formModel.CenaDomyslna,
+                    IdSeans = formModel.IdSeans,
+                    IdMiejsce = idMiejsce,
+                    IdTransakcja = createdTransakcja.IdTransakcja,
+                    Seans = await _seansService.GetSeansByIdAsync(formModel.IdSeans),
+                    Miejsce = await _miejsceService.GetMiejsceByIdAsync(idMiejsce),
+                    Transakcja = createdTransakcja
+                };
+                await _biletService.CreateBiletAsync(biletDTO);
+            }
+
+            createdTransakcja.Status = true;
+            await _transakcjaService.UpdateTransakcjaAsync(createdTransakcja.IdTransakcja, createdTransakcja);
+
+            return RedirectToAction("Confirmation", new { idTransakcja = createdTransakcja.IdTransakcja });
+        }
+
+        [HttpGet("Confirmation")]
+        public async Task<IActionResult> Confirmation(uint idTransakcja)
+        {
+            var transakcja = await _transakcjaService.GetTransakcjaByIdAsync(idTransakcja);
+            if (transakcja == null)
+            {
+                return NotFound();
+            }
+
+            return View(transakcja);
+        }
     }
 }

@@ -41,7 +41,9 @@ namespace GigaKino.Services
         {
             try
             {
-                var sala = await _context.Sale.FindAsync(id);
+                var sala = await _context.Sale
+                    .Include(s => s.Kino)  // Загрузить связанные данные о кинотеатре
+                    .FirstOrDefaultAsync(s => s.IdSala == id);
                 return _mapper.Map<SalaDTO>(sala);
             }
             catch (Exception ex)
