@@ -15,13 +15,15 @@ namespace GigaKino.Controllers
         private readonly IMiejsceService _miejsceService;
         private readonly IBiletService _biletService;
         private readonly ISeansService _seansService;
+        private readonly ITransakcjaService _transakcjaService;
 
-        public SalaController(ISalaService salaService, ISeansService seansService, IMiejsceService miejsceService, IBiletService biletService)
+        public SalaController(ISalaService salaService, ISeansService seansService, IMiejsceService miejsceService, IBiletService biletService, ITransakcjaService transakcjaService)
         {
             _salaService = salaService;
             _seansService = seansService;
             _biletService = biletService;
             _miejsceService = miejsceService;
+            _transakcjaService = transakcjaService;
         }
 
         [HttpPost]

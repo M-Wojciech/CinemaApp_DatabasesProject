@@ -1,5 +1,7 @@
 using GigaKino.ObjectsDTO;
+using GigaKino.Services;
 using GigaKino.ServicesInterfaces;
+using GigaKino.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -10,10 +12,20 @@ namespace GigaKino.Controllers
     public class TransakcjaController : Controller
     {
         private readonly ITransakcjaService _transakcjaService;
+        private readonly ISeansService _seansService;
+        private readonly ISalaService _salaService;
+        private readonly IFilmService _filmService;
+        private readonly IKinoService _kinoService;
+        private readonly IMiejsceService _miejsceService;
 
-        public TransakcjaController(ITransakcjaService transakcjaService)
+        public TransakcjaController(ITransakcjaService transakcjaService, ISeansService seansService, ISalaService salaService, IFilmService filmService, IKinoService kinoService, IMiejsceService miejsceService)
         {
             _transakcjaService = transakcjaService;
+            _seansService = seansService;
+            _salaService = salaService;
+            _filmService = filmService;
+            _kinoService = kinoService;
+            _miejsceService = miejsceService;
         }
 
         [HttpPost]
@@ -69,10 +81,33 @@ namespace GigaKino.Controllers
             return NoContent();
         }
 
-        [HttpGet("index")]
+        /*[HttpGet("index")]
         public IActionResult Index()
         {
             return View();
-        }
+        }*/
+
+        /*[HttpPost("Confirm")]
+        public async Task<IActionResult> Confirm(string selectedSeats, uint idSeans)
+        {
+            var seans = await _seansService.GetSeansByIdAsync(idSeans);
+            var film = await _filmService.GetFilmByIdAsync(seans.IdFilm);
+            var sala = await _salaService.GetSalaByIdAsync(seans.IdSala);
+            var kino = await _kinoService.GetKinoByIdAsync(sala.IdKino);
+            var selectedSeatsIds = selectedSeats.Split(',').Select(uint.Parse).ToList();
+
+            var miejsca = await _miejsceService.GetMiejsceByIdAsync(selectedSeatsIds);
+
+            var model = new ConfirmPurchaseViewModel
+            {
+                Seans = seans,
+                Film = film,
+                Sala = sala,
+                Kino = kino,
+                WybraneMiejsca = miejsca
+            };
+
+            return View(model);
+        }*/
     }
 }

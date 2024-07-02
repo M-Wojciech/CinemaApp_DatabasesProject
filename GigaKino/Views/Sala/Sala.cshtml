@@ -10,35 +10,57 @@
     <title>GigaKino_bilety</title>
     <link href="https://fonts.googleapis.com/css2?family=Istok+Web&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="~/css/bilety_style.css">
+    <link rel="stylesheet" href="~/css/sala_style.css">
     <script>
-        function submitSelection() {
-            const selectedSeats = [];
-            document.querySelectorAll('.miejsce.wybrane').forEach(button => {
-                selectedSeats.push({
-                    rzad: button.getAttribute('data-rzad'),
-                    kolumna: button.getAttribute('data-kolumna')
+        document.addEventListener('DOMContentLoaded', () => {
+            const maxSeats = @Model.Quantity;
+            const selectedSeats = new Set();
+            const nextBtn = document.getElementById('nextBtn');
+            const selectedSeatsInput = document.getElementById('selectedSeats');
+
+            document.querySelectorAll('.miejsce.wolne').forEach(button => {
+                button.addEventListener('click', function () {
+                    const id = this.getAttribute('data-id');
+
+                    if (selectedSeats.has(id)) {
+                        this.classList.remove('wybrane');
+                        selectedSeats.delete(id);
+                    } else if (selectedSeats.size < maxSeats) {
+                        this.classList.add('wybrane');
+                        selectedSeats.add(id);
+                    }
+
+                    // Деактивировать остальные кнопки, если выбрано максимум мест
+                    document.querySelectorAll('.miejsce.wolne').forEach(btn => {
+                        if (!selectedSeats.has(btn.getAttribute('data-id'))) {
+                            btn.disabled = selectedSeats.size >= maxSeats;
+                        }
+                    });
+                    // Обновить скрытое поле для отправки на следующую страницу
+                    selectedSeatsInput.value = Array.from(selectedSeats).join(',');
                 });
             });
 
-            // Ensure the number of selected seats matches the quantity
-            if (selectedSeats.length !== @Model.Quantity) {
-                alert('Wybierz odpowiednią liczbę miejsc.');
-                return;
-            }
-
-            // Process selected seats, redirect, or submit via form
-            console.log(selectedSeats);
-        }
-
-        document.querySelectorAll('.miejsce').forEach(button => {
-            button.addEventListener('click', function () {
-                if (this.classList.contains('zajete')) return;
-                this.classList.toggle('wybrane');
+            /*document.getElementById('submitSelection').addEventListener('click', () => {
+                if (selectedSeats.size === maxSeats) {
+                    alert('Выбрано мест: ' + Array.from(selectedSeats).join(', '));
+                } else {
+                    alert('Wybierz odpowiednią liczbę miejsc.');
+                }
+            });*/
+            nextBtn.addEventListener('click', () => {
+                if (selectedSeats.size === maxSeats) {
+                    // Отправить форму на следующую страницу
+                    document.getElementById('selectionForm').submit();
+                } else {
+                    alert('Wybierz odpowiednią liczbę miejsc.');
+                }
             });
         });
     </script>
     <style>
+
+
         .sala-container {
             display: grid;
             gap: 10px;
@@ -56,44 +78,26 @@
         .miejsce {
             width: 30px;
             height: 30px;
-            margin: 2px;
+            margin-left: 10px;
+            margin-right: 10px;
             border: none;
-            border-radius: 5px;
             text-align: center;
             cursor: pointer;
         }
 
             .miejsce.wolne {
-                background-color: green;
+                background-color: #009B5A;
             }
 
             .miejsce.zajete {
-                background-color: pink;
+                background-color: #BF5669;
                 cursor: not-allowed;
             }
 
             .miejsce.wybrane {
-                background-color: gray;
+                background-color: #BFBDBF;
             }
 
-        .controls {
-            margin-top: 20px;
-            display: flex;
-            justify-content: space-between;
-        }
-
-            .controls button {
-                padding: 10px 20px;
-                border: none;
-                border-radius: 5px;
-                background-color: #cc0000;
-                color: white;
-                cursor: pointer;
-            }
-
-                .controls button:hover {
-                    background-color: #990000;
-                }
     </style>
 </head>
 <body>
@@ -108,31 +112,42 @@
             <li><a>Repertuar</a></li>
         </ul>
     </header>
-    <h1>Wybierz miejsca</h1>
-    <p>Wybrane bilety: @Model.Quantity</p>
+    <main class="outer-container">
+    <h2>Wybierz miejsca</h2>
+    <!--<p>Wybrane bilety: @Model.Quantity</p>-->
 
-    <div class="sala-container">
-        @for (int rzad = 1; rzad <= Model.Miejsca.Max(m => m.Rzad); rzad++)
-        {
-            <div class="row">
-                @for (int kolumna = 1; kolumna <= Model.Miejsca.Max(m => m.Kolumna); kolumna++)
-                {
-                    var miejsce = Model.Miejsca.FirstOrDefault(m => m.Rzad == rzad && m.Kolumna == kolumna);
-                    if (miejsce != null)
+        <div class="sala-container">
+            @for (int rzad = 1; rzad <= Model.Miejsca.Max(m => m.Rzad); rzad++)
+            {
+                <div class="row">
+                    <b>@rzad</b>
+                    @for (int kolumna = 1; kolumna <= Model.Miejsca.Max(m => m.Kolumna); kolumna++)
                     {
-                        <button class="miejsce @(Model.ZajeteMiejsca.Contains(miejsce.IdMiejsce) ? "zajete" : "wolne")"
+                        var miejsce = Model.Miejsca.FirstOrDefault(m => m.Rzad == rzad && m.Kolumna == kolumna);
+                        if (miejsce != null)
+                        {
+                            <!--<button class="miejsce @(Model.ZajeteMiejsca.Contains(miejsce.IdMiejsce) ? "zajete" : "wolne")"
                                 data-rzad="@rzad" data-kolumna="@kolumna" @(Model.ZajeteMiejsca.Contains(miejsce.IdMiejsce) ? "disabled" : "")>
-                            @rzad-@kolumna
-                        </button>
+                            </button>-->
+                            var isZajete = Model.ZajeteMiejsca.Contains(miejsce.IdMiejsce);
+                            <button class="miejsce @(isZajete ? "zajete" : "wolne")"
+                                    data-id="@miejsce.IdMiejsce"
+                                    data-rzad="@rzad"
+                                    data-kolumna="@kolumna"
+                            @(isZajete ? "disabled" : "")>
+                            </button>
                     }
                 }
-            </div>
+                </div>
         }
-    </div>
-
-    <div class="controls">
-        <button onclick="history.back()">Wstecz</button>
-        <button onclick="submitSelection()">Dalej</button>
-    </div>
+        </div>
+        <form id="selectionForm" action="/Transakcja/Confirm" method="post">
+            <input type="hidden" id="selectedSeats" name="selectedSeats" value="">
+            <div class="buttons">
+                <button onclick="history.back()" class="back-btn" type="button">Wstecz</button>
+                <button class="next-btn" id="nextBtn" type="button">Dalej</button>
+            </div>
+        </form>
+    </main>
 </body>
 </html>
