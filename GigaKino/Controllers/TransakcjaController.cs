@@ -133,7 +133,7 @@ namespace GigaKino.Controllers
             {
                 CenaLaczna = formModel.CenaLaczna,
                 CzasRozpoczecia = DateTime.Now,
-                Status = false, // Pending
+                Status = true, // Pending
                 Klient = new KlientDTO
                 {
                     Mail = formModel.Mail,

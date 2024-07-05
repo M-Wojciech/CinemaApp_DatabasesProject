@@ -20,20 +20,113 @@
             </div>
         </div>
         <ul>
-            <li><a>Filmy</a></li>
-            <li><a class="active">Repertuar</a></li>
+            <li>
+                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Filmy</a>
+            </li>
+            <li>
+                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Repertuar">Repertuar</a>
+            </li>
         </ul>
     </header>
     <main>
-<h2>Potwierdzenie zamówienia</h2>
+        <section class="order-summary">
+            <h2>Twoje zamówienie</h2>
+            <p>@Model.Seans.Film.Tytul, @Model.Seans.Termin.ToString("dddd d.M HH:mm"), @Model.Seans.Sala.Kino.Nazwa</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Rodzaj biletu</th>
+                        <th>Ilość</th>
+                        <th>Cena</th>
+                        <th>Sala</th>
+                        <th>Miejsce</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var miejsce in Model.WybraneMiejsca)
+                    {
+                        <tr>
+                            <td>NORMALNY</td>
+                            <td>1</td>
+                            <td>@Model.Seans.CenaDomyslna zł</td>
+                            <td>@Model.Seans.Sala.Numer</td>
+                            <td>Rząd @miejsce.Rzad, miejsce @miejsce.Kolumna</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <div class="total">
+                <strong>Suma:</strong> @Model.CenaLaczna zł
+            </div>
+        </section>
+        <div class="outer-container">
+            <section class="payment">
+                <h2>Sposób płatności</h2>
+                <div class="payment-options">
+                    <label>
+                        <input type="radio" name="payment" value="card" checked>
+                        Debit/credit card
+                        <img src="~/img/Visa.png" alt="Visa">
+                    </label>
+                    <label>
+                        <input type="radio" name="payment" value="paypal">
+                        PayPal
+                        <img src="~/img/PayPal.png" alt="PayPal">
+                    </label>
+                    <label>
+                        <input type="radio" name="payment" value="blik">
+                        Blik
+                        <img src="~/img/blik.png" alt="Blik">
+                    </label>
+                </div>
+            </section>
+            <section class="personal-info">
+                <h2>Twoje dane</h2>
+                <form asp-action="Checkout" id="myForm" method="post">
+                    <input type="hidden" name="IdSeans" value="@Model.Seans.IdSeans" />
+                    <input type="hidden" name="CenaDomyslna" value="@Model.Seans.CenaDomyslna" />
+                    <input type="hidden" name="CenaLaczna" value="@Model.CenaLaczna" />
+                    @foreach (var miejsce in Model.WybraneMiejsca)
+                    {
+                        <input type="hidden" name="SelectedSeats" value="@miejsce.IdMiejsce" />
+                    }
+                    <div class="input-group-horizontal">
+                        <div class="input-field">
+                            <!--<label for="first-name">Imię</label>
+                            <input type="text" id="first-name" required>-->
+                            <label for="Imie">Imię</label>
+                            <input type="text" id="Imie" name="Imie" required />
+                        </div>
+                        <div class="input-field">
+                            <!--<label for="last-name">Nazwisko</label>
+                            <input type="text" id="last-name" required>-->
+                            <label for="Nazwisko">Nazwisko</label>
+                            <input type="text" id="Nazwisko" name="Nazwisko" required />
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <!--<label for="email">Email</label>
+                        <input type="email" id="email" required>-->
+                        <label for="Mail">Email</label>
+                        <input type="email" id="Mail" name="Mail" required />
+                    </div>
+                    <div class="buttons">
+                        <!--<button type="button" class="back-btn" onclick="submitForm('zamowenie.html', false)">Wstecz</button>
+                        <button type="button" class="next-btn" onclick="submitForm('zamowenie.html', true)">Dalej</button>-->
+                        <button type="submit" class="next-btn">Dalej</button>
+                    </div>
+                </form>
+            </section>
+        </div>
 
-<h3>Szczegóły seansu</h3>
+
+<!--<h3>Szczegóły seansu</h3>
 <p><strong>Film:</strong> @Model.Seans.Film.Tytul</p>
 <p><strong>Technologia:</strong> @Model.Seans.Technologia</p>
 <p><strong>Data i godzina:</strong> @Model.Seans.Termin</p>
-<p><strong>Kino:</strong> @Model.Seans.Sala.Kino.Nazwa</p>
+<p><strong>Kino:</strong> @Model.Seans.Sala.Kino.Nazwa</p>-->
 
-<h3>Wybrane miejsca</h3>
+<!--<h3>Wybrane miejsca</h3>
 <table>
     <thead>
         <tr>
@@ -56,11 +149,11 @@
             </tr>
         }
     </tbody>
-</table>
+</table>-->
 
-<h3>Łączna kwota: @Model.CenaLaczna zł</h3>
+<!--<h3>Łączna kwota: @Model.CenaLaczna zł</h3>-->
 
-<h3>Dane klienta</h3>
+<!--<h3>Dane klienta</h3>
 <form asp-action="Checkout" method="post">
     <input type="hidden" name="IdSeans" value="@Model.Seans.IdSeans" />
     <input type="hidden" name="CenaDomyslna" value="@Model.Seans.CenaDomyslna" />
@@ -84,7 +177,7 @@
     </div>
 
     <button type="submit">Potwierdź</button>
-</form>
+</form>-->
     </main>
 </body>
 </html>

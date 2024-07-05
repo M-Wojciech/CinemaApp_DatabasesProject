@@ -27,5 +27,6 @@ namespace GigaKino.Models
 
         [ForeignKey("IdKlient")]
         public required Klient Klient { get; set; }
+        public List<Bilet> Bilety { get; set; } = new List<Bilet>();
     }
 }

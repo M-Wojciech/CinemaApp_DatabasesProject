@@ -24,5 +24,6 @@ namespace GigaKino.Models
 
         [ForeignKey("IdKonto")]
         public Konto? Konto { get; set; }
+        public List<Transakcja> Transakcje { get; set; } = new List<Transakcja>();
     }
 }

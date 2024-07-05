@@ -15,14 +15,13 @@
     <!--<script src="~/js/bilety_fun.js" defer></script>-->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // Найдем элементы по id
+            
             const decreaseBtn = document.getElementById('decrease');
             const increaseBtn = document.getElementById('increase');
             const quantityInput = document.getElementById('quantity');
             const nextBtn = document.getElementById('nextBtn');
             const freeSeatsCount = parseInt(document.getElementById('freeSeatsCount').value);
 
-            // Обработчик нажатия на кнопку уменьшения
             decreaseBtn.addEventListener('click', () => {
                 let currentValue = parseInt(quantityInput.value);
                 if (!isNaN(currentValue) && currentValue > 0) {
@@ -30,7 +29,6 @@
                 }
             });
 
-            // Обработчик нажатия на кнопку увеличения
             increaseBtn.addEventListener('click', () => {
                 let currentValue = parseInt(quantityInput.value);
                 if (!isNaN(currentValue) && currentValue < freeSeatsCount) {
@@ -38,7 +36,6 @@
                 }
             });
 
-            // Проверка значения ввода на изменение
             quantityInput.addEventListener('input', () => {
                 let value = parseInt(quantityInput.value);
                 if (isNaN(value) || value < 0) {
@@ -68,8 +65,12 @@
             </div>
         </div>
         <ul>
-            <li><a>Filmy</a></li>
-            <li><a>Repertuar</a></li>
+            <li>
+                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Filmy</a>
+            </li>
+            <li>
+                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Repertuar">Repertuar</a>
+            </li>
         </ul>
     </header>
     <main class="outer-container">
@@ -122,11 +123,11 @@
                 }
             </tbody>
         </table>-->
-        <h2>Wolne miejsca</h2>
-        <p><strong>Całkowita liczba wolnych miejsc:</strong> @Model.FreeMiejscaCount</p>
+        <!--<h2>Wolne miejsca</h2>
+        <p><strong>Całkowita liczba wolnych miejsc:</strong> @Model.FreeMiejscaCount</p>-->
         <input type="hidden" id="freeSeatsCount" value="@Model.FreeMiejscaCount" />
 
-        <table>
+        <!--<table>
             <thead>
                 <tr>
                     <th>Rząd</th>
@@ -144,7 +145,7 @@
                     </tr>
                 }
             </tbody>
-        </table>
+        </table>-->
 <div class="tickets">
     <h2>Wybierz bilet</h2>
     <div class="ticket-selector">
