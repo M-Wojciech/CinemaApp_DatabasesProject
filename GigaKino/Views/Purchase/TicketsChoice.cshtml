@@ -49,7 +49,7 @@
                 let currentValue = parseInt(quantityInput.value);
                 if (currentValue > 0) {
                     // Замените 'your-next-page.html' на URL вашей следующей страницы
-                    window.location.href =`/api/Sala/Sala?idSeans=@Model.Seans.IdSeans&quantity=${currentValue}`;
+                    window.location.href =`/Purchase/SeatsChoice?idSeans=@Model.Seans.IdSeans&quantity=${currentValue}`;
                 } else {
                     alert('Nie wybrano ilości biletów.');
                 }
@@ -66,10 +66,10 @@
         </div>
         <ul>
             <li>
-                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Filmy</a>
+                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Movies">Filmy</a>
             </li>
             <li>
-                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Repertuar">Repertuar</a>
+                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Showtimes">Repertuar</a>
             </li>
         </ul>
     </header>
@@ -174,7 +174,7 @@
             <a asp-area="" asp-controller="Home" asp-action="Repertuar">
                 <button class="back-btn">Wstecz</button>
             </a>
-                    <button class="next-btn" id="nextBtn">Wybierz miejsca</button>
+                <button class="next-btn" id="nextBtn">Wybierz miejsca</button>
         </div>
     </div>
 </div>

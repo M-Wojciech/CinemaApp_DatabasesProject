@@ -1,81 +1,25 @@
-using GigaKino.ObjectsDTO;
-using GigaKino.Services;
-using GigaKino.ServicesInterfaces;
-using GigaKino.ViewModels;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
-using System.Security.Claims;
+using GigaKino.Models;
+using GigaKino.ServicesInterfaces;
+using GigaKino.ViewModels;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Mvc;
 
 
 namespace GigaKino.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class KontoController : Controller
+    public class AccountController : Controller
     {
         private readonly IKontoService _kontoService;
         private readonly IKlientService _klientService;
 
-        public KontoController(IKontoService kontoService, IKlientService klientService)
+        public AccountController(IKontoService kontoService, IKlientService klientService)
         {
             _kontoService = kontoService;
             _klientService = klientService;
-        }
-
-        [HttpPost]
-        public async Task<ActionResult<KontoDTO>> CreateKonto(KontoDTO kontoDTO)
-        {
-            if (kontoDTO == null)
-            {
-                return BadRequest("Cannot create from null object");
-            }
-
-            var createdKonto = await _kontoService.CreateKontoAsync(kontoDTO);
-            if (createdKonto == null)
-            {
-                return BadRequest("Failed to create Konto.");
-            }
-
-            return CreatedAtAction(nameof(GetKontoById), new { id = createdKonto.IdKonto }, createdKonto);
-        }
-
-        [HttpGet("{id}")]
-        public async Task<ActionResult<KontoDTO>> GetKontoById(uint id)
-        {
-            var konto = await _kontoService.GetKontoByIdAsync(id);
-
-            if (konto == null)
-            {
-                return NotFound();
-            }
-
-            return konto;
-        }
-
-        [HttpGet("konto")]
-        public async Task<ActionResult<IEnumerable<KontoDTO>>> GetAllKontos()
-        {
-            var kontos = await _kontoService.GetAllKontaAsync();
-            if (kontos == null)
-            {
-                return StatusCode(500, "Internal server error");
-            }
-            return Ok(kontos);
-        }
-
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteKonto(uint id)
-        {
-            var isDeleted = await _kontoService.DeleteKontoAsync(id);
-            if (isDeleted != true)
-            {
-                return NotFound();
-            }
-
-            return NoContent();
         }
 
         [HttpGet("login")]
@@ -117,11 +61,11 @@ namespace GigaKino.Controllers
                             IsPersistent = true
                         });
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Movies", "Home");
                 }
             }
 
-            // Если email или пароль неверны, добавьте сообщение об ошибке
+            // пїЅпїЅпїЅпїЅ email пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
             ModelState.AddModelError(string.Empty, "Invalid login attempt.");
             return View(model);
         }
@@ -130,21 +74,21 @@ namespace GigaKino.Controllers
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Movies", "Home");
         }
 
         private bool VerifyPassword(string password, string storedHash, string storedSalt)
         {
-            // Метод для проверки пароля
-            // Предполагается, что вы используете хеширование и соль для хранения паролей
+            // пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
             var hash = HashPassword(password, storedSalt);
             return hash == storedHash;
         }
 
         private string HashPassword(string password, string salt)
         {
-            // Метод для хеширования пароля
-            // Замените на вашу реализацию хеширования
+            // пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
             using var sha256 = SHA256.Create();
             var saltedPassword = password + salt;
             var saltedPasswordBytes = Encoding.UTF8.GetBytes(saltedPassword);
@@ -163,14 +107,16 @@ namespace GigaKino.Controllers
             return View(konty);
         }*/
 
-        public IActionResult MojeKonto()
+        public IActionResult MyAccount()
         {
             var email = User.Identity.Name;
+
             var klient = _klientService.GetKlientByEmail(email);
 
             if (klient == null)
             {
-                return NotFound();
+                return StatusCode(500, "Internal server error"); 
+                // return NotFound();
             }
 
             var viewModel = new MyAccountViewModel
@@ -181,6 +127,60 @@ namespace GigaKino.Controllers
             };
 
             return View(viewModel);
+        }
+
+                /*[HttpGet("signup")]
+        public IActionResult Signup()
+        {
+            return View();
+        }*/
+
+        [HttpGet("register")]
+        public IActionResult Register()
+        {
+            return View();
+        }
+
+        [HttpPost("register")]
+        [ValidateAntiForgeryToken]
+        public IActionResult Register([FromForm] RegistrationViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            if (_kontoService.UserExists(model.Mail))
+            {
+                ModelState.AddModelError(string.Empty, "Login already registered.");
+                return View(model);
+            }
+
+            var salt = _kontoService.GenerateSalt();
+            var hashedPassword = _kontoService.HashPassword(model.Password, salt);
+
+            var konto = new Konto
+            {
+                //Typ = model.Typ,
+                Typ = "klient",
+                Login = model.Mail,
+                Haslo = hashedPassword,
+                Sol = salt
+            };
+
+            _kontoService.AddKonto(konto);
+
+            var klient = new Klient
+            {
+                Mail = model.Mail,
+                Imie = model.Imie,
+                Nazwisko = model.Nazwisko,
+                IdKonto = konto.IdKonto
+            };
+
+            _klientService.AddKlient(klient);
+
+            return RedirectToAction("Movies", "Home");
         }
     }
 }

@@ -13,7 +13,6 @@ namespace GigaKino.Controllers
         private readonly IFilmService _filmService;
         private readonly ISeansService _seansService;
 
-
         public FilmController(IFilmService filmService, ISeansService seansService)
         {
             _filmService = filmService;
@@ -84,18 +83,6 @@ namespace GigaKino.Controllers
             }
 
             return NoContent();
-        }
-
-        [HttpGet("details/{id}")] 
-        public async Task<IActionResult> Index(uint id)
-        {
-            var film = await _filmService.GetFilmByIdAsync(id);
-            if (film == null)
-            {
-                return NotFound();
-            }
-
-            return View(film);
         }
     }
 }

@@ -1,8 +1,5 @@
-using GigaKino.Models;
 using GigaKino.ObjectsDTO;
-using GigaKino.Services;
 using GigaKino.ServicesInterfaces;
-using GigaKino.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -72,60 +69,6 @@ namespace GigaKino.Controllers
             }
 
             return NoContent();
-        }
-
-        /*[HttpGet("signup")]
-        public IActionResult Signup()
-        {
-            return View();
-        }*/
-
-        [HttpGet("register")]
-        public IActionResult Register()
-        {
-            return View();
-        }
-
-        [HttpPost("register")]
-        [ValidateAntiForgeryToken]
-        public IActionResult Register([FromForm] RegistrationViewModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
-
-            if (_kontoService.UserExists(model.Mail))
-            {
-                ModelState.AddModelError(string.Empty, "Login already registered.");
-                return View(model);
-            }
-
-            var salt = _kontoService.GenerateSalt();
-            var hashedPassword = _kontoService.HashPassword(model.Password, salt);
-
-            var konto = new Konto
-            {
-                //Typ = model.Typ,
-                Typ = "klient",
-                Login = model.Mail,
-                Haslo = hashedPassword,
-                Sol = salt
-            };
-
-            _kontoService.AddKonto(konto);
-
-            var klient = new Klient
-            {
-                Mail = model.Mail,
-                Imie = model.Imie,
-                Nazwisko = model.Nazwisko,
-                IdKonto = konto.IdKonto
-            };
-
-            _klientService.AddKlient(klient);
-
-            return RedirectToAction("Index", "Home");
         }
     }
 }

@@ -23,10 +23,10 @@
                         Użytkownik
                     </button>
                     <div id="myDropdown" class="dropdown-content">
-                        <a asp-controller="Konto" asp-action="MojeKonto">
+                        <a asp-controller="Account" asp-action="MyAccount">
                             Moje konto
                         </a>
-                        <a asp-controller="Konto" asp-action="Logout">
+                        <a asp-controller="Account" asp-action="Logout">
                             Wyloguj
                         </a>
                     </div>
@@ -38,11 +38,11 @@
                         KONTO
                     </button>
                     <div id="myDropdown" class="dropdown-content">
-                        <a asp-controller="Konto" asp-action="Login">
+                        <a asp-controller="Account" asp-action="Login">
                             <img src="~/img/Icons2.png" alt="Icon">
                             Logowanie
                         </a>
-                        <a asp-controller="Klient" asp-action="Register">
+                        <a asp-controller="Account" asp-action="Register">
                             <img src="~/img/edit.png" alt="Icon">
                             Rejestracja
                         </a>
@@ -52,10 +52,10 @@
         </div>
         <ul>
             <li class="nav-item">
-                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Filmy</a>
+                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Movies">Filmy</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Repertuar">Repertuar</a>
+                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Showtimes">Repertuar</a>
             </li>
             <!--<li class="nav-item">
                 <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="StronaTestowa">StronaTestowa</a>

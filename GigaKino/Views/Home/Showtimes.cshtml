@@ -237,47 +237,40 @@
         }
     </select>
 </div>
-    <label id="dzisiaj"></label>
-    <section class="movies">
-            @if (Model != null)
-            {
-                foreach (var Film in Model)
-                {
-            <article class="movie">
-                    <img src="@Film.PosterPath" alt="poster">
-                    <div class="details">
-                        <h2>@Film.Tytul</h2>
-                    <p>@Film.Gatunek | @Film.Ogr_wiekowe | @Film.Dlugosc</p>
-                    <div class="showtimes">
-                         @foreach (var Technology in Film.ListaWersjiTechnologicznych)
+<label id="dzisiaj"></label>
+<section class="movies">
+    @if (Model != null)
+    {
+        foreach (var Film in Model)
+        {
+        <article class="movie">
+            <img src="@Film.PosterPath" alt="poster">
+            <div class="details">
+                <h2>@Film.Tytul</h2>
+                <p>@Film.Gatunek | @Film.Ogr_wiekowe | @Film.Dlugosc</p>
+                <div class="showtimes">
+                    @foreach (var Technology in Film.ListaWersjiTechnologicznych)
+                    {
+                        @foreach (var lang in Technology.ListaWersjiJezykowych)
                         {
-                            
-                            @foreach (var lang in Technology.ListaWersjiJezykowych)
+                            @foreach (var screening in lang.ListaSeansow)
                             {
-                                @foreach (var screening in lang.ListaSeansow)
-                                {
-                                    <!--<a asp-area="" asp-controller="Seans" asp-action="Index" asp-route-idSeans="@screening.IdSeans">
-                                        <button data-termin="@screening.Termin.ToString("yyyy-MM-dd")">
-                                            @screening.Termin.ToString("HH:mm")<br />@Technology.Wersja, @lang.Wersja
-                                        </button>
-                                    </a>-->
-                                    <a href="@Url.Action("Index", "Seans", new { idSeans = screening.IdSeans })" class="session-link">
-                                        <button data-termin="@screening.Termin.ToString("yyyy-MM-dd")">
-                                            @screening.Termin.ToString("HH:mm")<br />@Technology.Wersja, @lang.Wersja
-                                        </button>
-                                    </a>
-                                }
+                                <a href="@Url.Action("TicketsChoice", "Purchase", new { idSeans = screening.IdSeans })" class="session-link">
+                                    <button data-termin="@screening.Termin.ToString("yyyy-MM-dd")">
+                                        @screening.Termin.ToString("HH:mm")<br />@Technology.Wersja, @lang.Wersja
+                                    </button>
+                                </a>
                             }
-                            
                         }
-                        </div>
-                    </div>
-                    </article>
-                }
-            }
-            else
-            {
-                <p>Brak dostępnych filmów.</p>
-            }
-    </section>
+                    }
+                </div>
+            </div>
+        </article>
+        }
+    }
+    else
+    {
+        <p>Brak dostępnych filmów.</p>
+    }
+</section>
 

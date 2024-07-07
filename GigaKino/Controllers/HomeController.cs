@@ -2,84 +2,57 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using GigaKino.Models;
 using GigaKino.ServicesInterfaces;
-using GigaKino.Services;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using GigaKino.ObjectsDTO;
 
-namespace GigaKino.Controllers;
 
-public class HomeController : Controller
+namespace GigaKino.Controllers
 {
-    private readonly ILogger<HomeController> _logger;
-    private readonly IFilmService _filmService;
-    private readonly IRepertuarService _repertuarService;
-    private readonly ISalaService _salaService;
-    private readonly ISeansService _seansService;
-    private readonly IKinoService _kinoService;
-
-    public HomeController(ILogger<HomeController> logger, IFilmService filmService, IRepertuarService repertuarService, ISalaService salaService, ISeansService seansService, IKinoService kinoService)
+    public class HomeController : Controller
     {
-        _logger = logger;
-        _filmService = filmService;
-        _repertuarService = repertuarService;
-        _salaService = salaService;
-        _seansService = seansService;
-        _kinoService = kinoService;
-    }
+        private readonly IFilmService _filmService;
+        private readonly IRepertuarService _repertuarService;
 
-    public async Task<IActionResult> Index()
-    {
-        var filmy = await _filmService.GetAllFilmyAsync();
-        if (filmy == null)
+        public HomeController(IFilmService filmService, IRepertuarService repertuarService)
         {
-            return StatusCode(500, "Internal server error");
+            _filmService = filmService;
+            _repertuarService = repertuarService;
         }
-        return View(filmy);
-    }
 
-    public async Task<IActionResult> Repertuar()
-    {
-        var repertuar = await _repertuarService.GetRepertuarAsync(1);
-        if (repertuar == null)
+        public async Task<IActionResult> Movies()
         {
-            return StatusCode(500, "Internal server error");
+            var filmy = await _filmService.GetAllFilmyAsync();
+            if (filmy == null)
+            {
+                return StatusCode(500, "Internal server error");
+            }
+            return View(filmy);
         }
-        return View(repertuar);
-    }
 
-    public async Task<IActionResult> StronaTestowa()
-    {
-        var repertuar = await _repertuarService.GetRepertuarAsync(1);
-        if (repertuar == null)
+        public async Task<IActionResult> Showtimes()
         {
-            return StatusCode(500, "Internal server error");
+            var repertuar = await _repertuarService.GetRepertuarAsync(1);
+            if (repertuar == null)
+            {
+                return StatusCode(500, "Internal server error");
+            }
+            return View(repertuar);
         }
-        return View(repertuar);
-    }
 
-    public async Task<IActionResult> StronaTestowa2(uint idSeans)
-    {
-        var seans = await _seansService.GetSeansByIdAsync(idSeans);
-        if (seans == null)
-            return StatusCode(500, "Internal server error");
-        var film = await _filmService.GetFilmByIdAsync(seans.IdFilm);
-        if (film == null)
-            return StatusCode(500, "Internal server error");
-        var sala = await _salaService.GetSalaByIdAsync(seans.IdSala);
-        if (sala == null)
-            return NotFound();
-        var kino = await _kinoService.GetKinoByIdAsync(sala.IdKino);
-        if (kino == null)
-            return NotFound();
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
 
-        var model = new Tuple<SeansDTO, FilmDTO, SalaDTO, KinoDTO>(seans, film, sala, kino);//, KinoDTO>(seans, film, sala, kino);
+        [HttpGet("details/{id}")] 
+        public async Task<IActionResult> MovieDetails(uint id)
+        {
+            var film = await _filmService.GetFilmByIdAsync(id);
+            if (film == null)
+            {
+                return NotFound();
+            }
 
-        return View(model);
-    }
-
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult Error()
-    {
-        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View(film);
+        }
     }
 }

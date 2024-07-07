@@ -42,7 +42,7 @@
                     // Перенаправление на страницу оплаты с выбранными местами
                     const urlParams = new URLSearchParams(window.location.search);
                     const idSeans = urlParams.get('idSeans');
-                    window.location.href = `/api/Transakcja/Checkout?idSeans=${idSeans}&selectedSeats=${Array.from(selectedSeats).join(',')}`;
+                    window.location.href = `/Purchase/Checkout?idSeans=${idSeans}&selectedSeats=${Array.from(selectedSeats).join(',')}`;
                 } else {
                     alert('Wybierz odpowiednią liczbę miejsc.');
                 }
@@ -100,10 +100,10 @@
         </div>
         <ul>
             <li>
-                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Filmy</a>
+                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Movies">Filmy</a>
             </li>
             <li>
-                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Repertuar">Repertuar</a>
+                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Showtimes">Repertuar</a>
             </li>
         </ul>
     </header>

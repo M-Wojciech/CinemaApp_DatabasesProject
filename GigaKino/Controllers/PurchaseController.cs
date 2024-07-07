@@ -1,5 +1,4 @@
 using GigaKino.ObjectsDTO;
-using GigaKino.Services;
 using GigaKino.ServicesInterfaces;
 using GigaKino.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -7,89 +6,104 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GigaKino.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class TransakcjaController : Controller
+    public class PurchaseController : Controller
     {
-        private readonly ITransakcjaService _transakcjaService;
         private readonly ISeansService _seansService;
-        private readonly ISalaService _salaService;
         private readonly IFilmService _filmService;
+        private readonly ISalaService _salaService;
         private readonly IKinoService _kinoService;
         private readonly IMiejsceService _miejsceService;
         private readonly IBiletService _biletService;
+        private readonly ITransakcjaService _transakcjaService;
 
-        public TransakcjaController(ITransakcjaService transakcjaService, ISeansService seansService, ISalaService salaService, IFilmService filmService, IKinoService kinoService, IMiejsceService miejsceService, IBiletService biletService)
+        public PurchaseController(ISeansService seansService, IFilmService filmService, ISalaService salaService, IKinoService kinoService, IMiejsceService miejsceService, IBiletService biletService, ITransakcjaService transakcjaService)
         {
-            _transakcjaService = transakcjaService;
             _seansService = seansService;
-            _salaService = salaService;
             _filmService = filmService;
+            _salaService = salaService;
             _kinoService = kinoService;
             _miejsceService = miejsceService;
             _biletService = biletService;
+            _transakcjaService = transakcjaService;
         }
 
-        [HttpPost]
-        public async Task<ActionResult<TransakcjaDTO>> CreateTransakcja(TransakcjaDTO transakcjaDTO)
+        [HttpGet("TicketsChoice")]
+        public async Task<IActionResult> TicketsChoice(uint idSeans)
         {
-            if (transakcjaDTO == null)
-            {
-                return BadRequest("Cannot create from null object");
-            }
+            var seans = await _seansService.GetSeansByIdAsync(idSeans);
+            if (seans == null)
+                return StatusCode(500, "Internal server error");
+            var film = await _filmService.GetFilmByIdAsync(seans.IdFilm);
+            if (film == null)
+                return StatusCode(500, "Internal server error");
+            var sala = await _salaService.GetSalaByIdAsync(seans.IdSala);
+            if (sala == null)
+                return StatusCode(500, "Internal server error");
+            var kino = await _kinoService.GetKinoByIdAsync(sala.IdKino);
+            if (kino == null)
+                return StatusCode(500, "Internal server error");
 
-            var createdTransakcja = await _transakcjaService.CreateTransakcjaAsync(transakcjaDTO);
-            if (createdTransakcja == null)
-            {
-                return BadRequest("Failed to create Transakcja.");
-            }
-
-            return CreatedAtAction(nameof(GetTransakcjaById), new { id = createdTransakcja.IdTransakcja }, createdTransakcja);
-        }
-
-        [HttpGet("{id}")]
-        public async Task<ActionResult<TransakcjaDTO>> GetTransakcjaById(uint id)
-        {
-            var transakcja = await _transakcjaService.GetTransakcjaByIdAsync(id);
-
-            if (transakcja == null)
-            {
-                return NotFound();
-            }
-
-            return transakcja;
-        }
-
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<TransakcjaDTO>>> GetAllTransakcjas()
-        {
-            var transakcjas = await _transakcjaService.GetAllTransakcjeAsync();
-            if (transakcjas == null)
+            var miejsca = await _miejsceService.GetMiejscaBySalaIdAsync(sala.IdSala);
+            if (miejsca == null || !miejsca.Any())
             {
                 return StatusCode(500, "Internal server error");
             }
-            return Ok(transakcjas);
-        }
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteTransakcja(uint id)
-        {
-            var isDeleted = await _transakcjaService.DeleteTransakcjaAsync(id);
-            if (isDeleted != true)
+            var bilety = await _biletService.GetBiletBySeansIdAsync(idSeans);
+            if (bilety == null)
             {
-                return NotFound();
+                bilety = new List<BiletDTO>();
             }
 
-            return NoContent();
+            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ ID пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
+            var occupiedMiejsceIds = bilety.Select(b => b.IdMiejsce).ToHashSet();
+
+            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
+            var freeMiejsca = miejsca.Where(m => !occupiedMiejsceIds.Contains(m.IdMiejsce)).ToList();
+
+            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
+            int freeMiejscaCount = freeMiejsca.Count;
+
+            var model = new SeansViewModel
+            {
+                Seans = seans,
+                Film = film,
+                Sala = sala,
+                Kino = kino,
+                Miejsca = freeMiejsca,
+                Bilet = bilety,
+                FreeMiejscaCount = freeMiejscaCount
+            };
+
+            //var model = new Tuple<SeansDTO, FilmDTO, SalaDTO, KinoDTO, MiejsceDTO>(seans, film, sala, kino, (MiejsceDTO)miejsca);//, KinoDTO>(seans, film, sala, kino);
+
+            return View(model);
+        }
+    
+        public async Task<IActionResult> SeatsChoice(uint idSeans, int quantity)
+        {
+            var seans = await _seansService.GetSeansByIdAsync(idSeans);
+            if (seans == null) return NotFound();
+
+            var miejsca = await _miejsceService.GetMiejscaBySalaIdAsync(seans.IdSala);
+            if (miejsca == null || !miejsca.Any()) return NotFound();
+
+            var bilety = await _biletService.GetBiletBySeansIdAsync(idSeans);
+
+            var zajeteMiejsca = bilety.Select(b => b.IdMiejsce).ToHashSet();
+
+            var model = new SalaViewModel
+            {
+                Seans = seans,
+                Miejsca = miejsca,
+                ZajeteMiejsca = zajeteMiejsca,
+                Quantity = quantity
+            };
+
+            return View(model);
         }
 
-        /*[HttpGet("index")]
-        public IActionResult Index()
-        {
-            return View();
-        }*/
-
-        [HttpGet("Checkout")]
+        // [HttpGet("Checkout")]
         public async Task<IActionResult> Checkout(uint idSeans, string selectedSeats)
         {
             var seans = await _seansService.GetSeansByIdAsync(idSeans);
@@ -107,7 +121,7 @@ namespace GigaKino.Controllers
             {
                 Seans = seans,
                 WybraneMiejsca = miejsca,
-                CenaLaczna = miejsca.Count * seans.CenaDomyslna // например, вычисление цены
+                CenaLaczna = miejsca.Count * seans.CenaDomyslna // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
             };
 
             return View(model);
@@ -122,7 +136,7 @@ namespace GigaKino.Controllers
                 return BadRequest(ModelState);
             }
 
-            // Создайте или получите клиента
+            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
             var klient = new KlientDTO
             {
                 Mail = formModel.Mail,

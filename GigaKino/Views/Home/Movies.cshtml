@@ -32,7 +32,7 @@
                 foreach (var film in Model)
                 {
                     <div class="movie">
-                        <a href="@Url.Action("Index", "Film", new { id = film.IdFilm })">
+                        <a href="@Url.Action("MovieDetails", "Home", new { id = film.IdFilm })">
                             <img src="@film.PosterPath" alt="poster">
                             <div class="movie-title">@film.Tytul</div>
                         </a>
